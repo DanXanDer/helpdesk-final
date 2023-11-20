@@ -7,6 +7,9 @@ public class UsuarioIDRequest {
         this.idUsuario = idUsuario;
     }
 
+    public UsuarioIDRequest() {
+    }
+
     public int getIdUsuario() {
         return idUsuario;
     }

@@ -40,8 +40,8 @@ public class AutenticacionService {
         return usuarioPrivilegioRepository.buscarPrivilegiosDeUsuario(idUsuario);
     }
 
-    public void completarDatosUsuario(int idUsuario, String clave, int preguntaSeguridad, String rptaSecreta){
-        usuarioRepository.completarDatosUsuario(idUsuario, clave, preguntaSeguridad, rptaSecreta);
+    public void completarDatosUsuario(int idUsuario, String clave, String nuevaClave, int preguntaSeguridad, String rptaSecreta){
+        if()
     }
 
 }

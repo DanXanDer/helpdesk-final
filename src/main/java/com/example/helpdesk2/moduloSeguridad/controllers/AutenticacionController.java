@@ -51,6 +51,7 @@ public class AutenticacionController {
         autenticacionService.completarDatosUsuario(
                 completarDatosRequest.getIdUsuario(),
                 completarDatosRequest.getClave(),
+                completarDatosRequest.getNuevaClave(),
                 completarDatosRequest.getPreguntaSeguridad(),
                 completarDatosRequest.getRptaSecreta()
         );
