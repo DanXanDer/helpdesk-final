@@ -11,7 +11,7 @@ public class UsuarioIDRequest {
         return idUsuario;
     }
 
-    public void setidUsuario(int idUsuario) {
+    public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
 }
