@@ -1,8 +1,14 @@
 package com.example.helpdesk2.moduloSeguridad.DTO;
 
+
+import jakarta.validation.constraints.NotBlank;
+
 public class UsuarioRequest {
 
+    @NotBlank(message = "El nombre de usuario no puede estar vacío")
     private String nombreUsuario;
+
+    @NotBlank(message = "La clave no puede estar vacía")
     private String clave;
 
     public UsuarioRequest(String nombreUsuario, String clave) {

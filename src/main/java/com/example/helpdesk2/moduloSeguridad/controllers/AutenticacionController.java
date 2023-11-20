@@ -6,6 +6,7 @@ import com.example.helpdesk2.moduloSeguridad.DTO.UsuarioIDRequest;
 import com.example.helpdesk2.moduloSeguridad.DTO.UsuarioRequest;
 import com.example.helpdesk2.models.UsuarioPrivilegio;
 import com.example.helpdesk2.moduloSeguridad.services.AutenticacionService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,11 +26,12 @@ public class AutenticacionController {
     }
 
     @PostMapping("/checkPrimerLogin")
-    public ResponseEntity<Map<String, Object>> checkPrimerLogin(@RequestBody UsuarioRequest usuarioRequest){
+    public ResponseEntity<Map<String, Object>> checkPrimerLogin(@Valid @RequestBody UsuarioRequest usuarioRequest) {
         Usuario usuario = autenticacionService.checkUsuarioPrimerLogin(
                 usuarioRequest.getNombreUsuario(),
                 usuarioRequest.getClave()
         );
+
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("idUsuario", usuario.getIdUsuario());
         respuesta.put("primerLogin", usuario.isPrimerLogin());
@@ -39,7 +41,7 @@ public class AutenticacionController {
     }
 
     @PostMapping("/bienvenida")
-    public ResponseEntity<List<UsuarioPrivilegio>> bienvenida(@RequestBody UsuarioIDRequest usuarioIDRequest){
+    public ResponseEntity<List<UsuarioPrivilegio>> bienvenida(@RequestBody UsuarioIDRequest usuarioIDRequest) {
         List<UsuarioPrivilegio> usuarioPrivilegios = autenticacionService.obtenerPrivilegiosUsuario(usuarioIDRequest.getIdUsuario());
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -47,7 +49,7 @@ public class AutenticacionController {
     }
 
     @PostMapping("/completarDatos")
-    public ResponseEntity<Map<String, Object>> completarDatos(@RequestBody CompletarDatosRequest completarDatosRequest){
+    public ResponseEntity<Map<String, Object>> completarDatos(@Valid @RequestBody CompletarDatosRequest completarDatosRequest) {
         autenticacionService.completarDatosUsuario(
                 completarDatosRequest.getIdUsuario(),
                 completarDatosRequest.getClave(),

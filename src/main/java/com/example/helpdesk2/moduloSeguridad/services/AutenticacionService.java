@@ -1,5 +1,6 @@
 package com.example.helpdesk2.moduloSeguridad.services;
 
+import com.example.helpdesk2.moduloSeguridad.exceptions.ClavesNoCoinciden;
 import com.example.helpdesk2.moduloSeguridad.exceptions.UsuarioNoEncontrado;
 import com.example.helpdesk2.models.Usuario;
 import com.example.helpdesk2.models.UsuarioPrivilegio;
@@ -41,7 +42,12 @@ public class AutenticacionService {
     }
 
     public void completarDatosUsuario(int idUsuario, String clave, String nuevaClave, int preguntaSeguridad, String rptaSecreta){
-        if()
+        if(clave.equals(nuevaClave)){
+            usuarioRepository.completarDatosUsuario(idUsuario, clave, preguntaSeguridad, rptaSecreta);
+        }
+        else{
+            throw new ClavesNoCoinciden();
+        }
     }
 
 }

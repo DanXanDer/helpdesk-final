@@ -1,6 +1,7 @@
 package com.example.helpdesk2.moduloSeguridad.DTO;
 
 public class UsuarioIDRequest {
+
     private int idUsuario;
 
     public UsuarioIDRequest(int idUsuario) {
