@@ -29,16 +29,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, Map> exceptionValidacionesInvalidas(MethodArgumentNotValidException e){
-        Map<String, String> listaErrores = new HashMap<>();
+    public Map<String, Object> exceptionValidacionesInvalidas(MethodArgumentNotValidException e){
+        Map<String, String> errores = new HashMap<>();
         e.getBindingResult().getAllErrors().forEach(error -> {
             String campo = ((FieldError) error).getField();
             String errorMensaje = error.getDefaultMessage();
-            listaErrores.put(campo, errorMensaje);
+            errores.put(campo, errorMensaje);
         });
-        Map<String, Map> errores = new HashMap<>();
-        errores.put("errores", listaErrores);
-        return errores;
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", false);
+        respuesta.put("errores", errores);
+        return respuesta;
     }
 
 
