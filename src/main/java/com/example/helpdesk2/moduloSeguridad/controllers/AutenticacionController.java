@@ -11,12 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/")
 public class AutenticacionController {
 
     private final AutenticacionService autenticacionService;
@@ -31,8 +30,8 @@ public class AutenticacionController {
                 usuarioRequest.getNombreUsuario(),
                 usuarioRequest.getClave()
         );
-
         Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", true);
         respuesta.put("idUsuario", usuario.getIdUsuario());
         respuesta.put("primerLogin", usuario.isPrimerLogin());
         return ResponseEntity
@@ -41,12 +40,16 @@ public class AutenticacionController {
     }
 
     @PostMapping("/bienvenida")
-    public ResponseEntity<List<UsuarioPrivilegio>> bienvenida(@RequestBody UsuarioIDRequest usuarioIDRequest) {
+    public ResponseEntity<Map<String, Object>> bienvenida(@RequestBody UsuarioIDRequest usuarioIDRequest) {
         List<UsuarioPrivilegio> usuarioPrivilegios = autenticacionService.obtenerPrivilegiosUsuario(usuarioIDRequest.getIdUsuario());
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", true);
+        respuesta.put("usuarioPrivilegios", usuarioPrivilegios);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(usuarioPrivilegios);
+                .body(respuesta);
     }
+
 
     @PostMapping("/completarDatos")
     public ResponseEntity<Map<String, Object>> completarDatos(@Valid @RequestBody CompletarDatosRequest completarDatosRequest) {
@@ -57,11 +60,11 @@ public class AutenticacionController {
                 completarDatosRequest.getPreguntaSeguridad(),
                 completarDatosRequest.getRptaSecreta()
         );
-        Map<String, Object> mensaje = new HashMap<>();
-        mensaje.put("mensaje", "Datos completados correctamente");
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", true);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(mensaje);
+                .body(respuesta);
     }
 
 }

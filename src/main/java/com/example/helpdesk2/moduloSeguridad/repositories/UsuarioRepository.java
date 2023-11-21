@@ -15,4 +15,8 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
     @Query("UPDATE usuario SET primer_login = 0, clave = :clave, id_pregunta_seguridad = :preguntaSeguridad, rpta_secreta = :rptaSecreta WHERE id_usuario = :idUsuario")
     @Modifying
     void completarDatosUsuario(int idUsuario, String clave, int preguntaSeguridad, String rptaSecreta);
+
+    @Query("SELECT id_usuario FROM usuario WHERE nombre_usuario = :nombreUsuario AND nombres = :nombres AND apellidos = :apellidos AND estado = 1")
+    Optional<Integer> buscarUsuarioPorDatos(String nombreUsuario, String nombres, String apellidos);
+
 }
