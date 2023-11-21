@@ -1,10 +1,12 @@
-package com.example.helpdesk2.moduloSeguridad.repositories;
+package com.example.helpdesk2.repositories;
 
 import com.example.helpdesk2.models.Usuario;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
@@ -28,5 +30,18 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
     @Query("UPDATE usuario SET clave = :clave WHERE id_usuario = :idUsuario")
     @Modifying
     void reestablecerClave(int idUsuario, String clave);
+
+    @Query("SELECT * FROM usuario")
+    Optional<List<Usuario>> buscarTodosLosUsuarios();
+
+    @Query("SELECT * FROM usuario u WHERE " +
+            "(:filtro = 'nombre_usuario' AND u.nombre_usuario LIKE CONCAT(:valor, '%')) OR " +
+            "(:filtro = 'nombres' AND u.nombres LIKE CONCAT(:valor, '%')) OR " +
+            "(:filtro = 'apellidos' AND u.apellidos LIKE CONCAT(:valor, '%')) OR " +
+            "(:filtro = 'tipo' AND u.tipo = :valor)")
+    Optional<List<Usuario>> buscarUsuariosPorFiltro(
+            @Param("filtro") String filtro,
+            @Param("valor") String valor
+    );
 
 }

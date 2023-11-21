@@ -1,4 +1,4 @@
-package com.example.helpdesk2.moduloSeguridad.repositories;
+package com.example.helpdesk2.repositories;
 
 import com.example.helpdesk2.models.UsuarioPrivilegio;
 import org.springframework.data.jdbc.repository.query.Query;

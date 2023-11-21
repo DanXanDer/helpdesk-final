@@ -4,15 +4,13 @@ import com.example.helpdesk2.moduloSeguridad.exceptions.ClavesNoCoinciden;
 import com.example.helpdesk2.moduloSeguridad.exceptions.UsuarioNoEncontrado;
 import com.example.helpdesk2.models.Usuario;
 import com.example.helpdesk2.models.UsuarioPrivilegio;
-import com.example.helpdesk2.moduloSeguridad.repositories.UsuarioPrivilegioRepository;
-import com.example.helpdesk2.moduloSeguridad.repositories.UsuarioRepository;
+import com.example.helpdesk2.repositories.UsuarioPrivilegioRepository;
+import com.example.helpdesk2.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.List;
 
 @Service
-@RequestScope
 public class AutenticacionService {
 
     private final UsuarioRepository usuarioRepository;

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/seguridad")
 public class AutenticacionController {
 
     private final AutenticacionService autenticacionService;
@@ -24,7 +25,7 @@ public class AutenticacionController {
         this.autenticacionService = autenticacionService;
     }
 
-    @PostMapping("/checkPrimerLogin")
+    @PostMapping("/primer-login")
     public ResponseEntity<Map<String, Object>> checkPrimerLogin(@Valid @RequestBody UsuarioRequest usuarioRequest) {
         Usuario usuario = autenticacionService.checkUsuarioPrimerLogin(
                 usuarioRequest.getNombreUsuario(),
@@ -39,7 +40,7 @@ public class AutenticacionController {
                 .body(respuesta);
     }
 
-    @PostMapping("/bienvenida")
+    @PostMapping("/privilegios")
     public ResponseEntity<Map<String, Object>> bienvenida(@RequestBody UsuarioIDRequest usuarioIDRequest) {
         List<UsuarioPrivilegio> usuarioPrivilegios = autenticacionService.obtenerPrivilegiosUsuario(usuarioIDRequest.getIdUsuario());
         Map<String, Object> respuesta = new HashMap<>();
@@ -51,7 +52,7 @@ public class AutenticacionController {
     }
 
 
-    @PostMapping("/completarDatos")
+    @PostMapping("/completar-datos")
     public ResponseEntity<Map<String, Object>> completarDatos(@Valid @RequestBody CompletarDatosRequest completarDatosRequest) {
         autenticacionService.completarDatosUsuario(
                 completarDatosRequest.getIdUsuario(),
