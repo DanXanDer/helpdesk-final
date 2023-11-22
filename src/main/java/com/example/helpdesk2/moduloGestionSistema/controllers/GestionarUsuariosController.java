@@ -73,4 +73,33 @@ public class GestionarUsuariosController {
                 .body(respuesta);
     }
 
+    @GetMapping("/obtener-empresas")
+    public ResponseEntity<Map<String, Object>> obtenerEmpresas(){
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", true);
+        respuesta.put("empresas", gestionarUsuariosService.obtenerEmpresas());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respuesta);
+    }
+
+    @GetMapping("/obtener-sedes")
+    public ResponseEntity<Map<String, Object>> obtenerSedes(@RequestParam int idEmpresa){
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", true);
+        respuesta.put("sedes", gestionarUsuariosService.obtenerSedesPorEmpresa(idEmpresa));
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respuesta);
+    }
+
+    @GetMapping("/obtener-areas")
+    public ResponseEntity<Map<String, Object>> obtenerAreas(@RequestParam int idSede){
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", true);
+        respuesta.put("areas", gestionarUsuariosService.obtenerAreasPorSede(idSede));
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respuesta);
+    }
 }
