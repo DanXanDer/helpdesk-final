@@ -1,14 +1,14 @@
-package com.example.helpdesk2.moduloSeguridad.DTO;
+package com.example.helpdesk2.DTO;
 
-public class UsuarioIDRequest {
+public class PrivilegiosUsuarioDTO {
 
     private int idUsuario;
 
-    public UsuarioIDRequest(int idUsuario) {
+    public PrivilegiosUsuarioDTO(int idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public UsuarioIDRequest() {
+    public PrivilegiosUsuarioDTO() {
     }
 
     public int getIdUsuario() {

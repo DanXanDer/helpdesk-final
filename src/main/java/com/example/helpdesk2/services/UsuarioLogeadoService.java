@@ -1,22 +1,23 @@
-package com.example.helpdesk2.moduloSeguridad.DTO;
+package com.example.helpdesk2.services;
 
-import jakarta.validation.constraints.NotBlank;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
-public class ValidarDatosUsuarioRequest {
+@Component
+@SessionScope
+public class UsuarioLogeadoService {
 
-    @NotBlank(message = "El nombre de usuario no puede estar vacío")
+    private int idUsuario;
     private String nombreUsuario;
-
-    @NotBlank(message = "El campo de nombres no puede estar vacío")
     private String nombres;
-
-    @NotBlank(message = "El campo apellidos no puede estar vacío")
     private String apellidos;
 
-    public ValidarDatosUsuarioRequest(String nombreUsuario, String nombres, String apellidos) {
-        this.nombreUsuario = nombreUsuario;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNombreUsuario() {

@@ -12,7 +12,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class ModuloGestionSistemaExceptionHandler {
 
-    @ExceptionHandler(UsuariosNoEncontrados.class)
+    @ExceptionHandler(UsuariosNoEncontradosException.class)
     public ResponseEntity<Map<String, Object>> exceptionUsuariosNoEncontrados(){
         ErrorDetalles errorDetalles = new ErrorDetalles();
         errorDetalles.setMensaje("No se encontraron usuarios");
@@ -20,7 +20,20 @@ public class ModuloGestionSistemaExceptionHandler {
         respuesta.put("ok", false);
         respuesta.put("error", errorDetalles);
         return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
+                .status(HttpStatus.BAD_REQUEST)
                 .body(respuesta);
     }
+
+    @ExceptionHandler(NombreUsuarioExisteException.class)
+    public ResponseEntity<Map<String, Object>> exceptionNombreUsuarioExiste(){
+        ErrorDetalles errorDetalles = new ErrorDetalles();
+        errorDetalles.setMensaje("El nombre de usuario ya existe");
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", false);
+        respuesta.put("error", errorDetalles);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(respuesta);
+    }
+
 }

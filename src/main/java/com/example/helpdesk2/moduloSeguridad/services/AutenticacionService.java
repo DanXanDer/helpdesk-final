@@ -1,11 +1,15 @@
 package com.example.helpdesk2.moduloSeguridad.services;
 
-import com.example.helpdesk2.moduloSeguridad.exceptions.ClavesNoCoinciden;
-import com.example.helpdesk2.moduloSeguridad.exceptions.UsuarioNoEncontrado;
+import com.example.helpdesk2.DTO.CheckPrimerLoginDTO;
+import com.example.helpdesk2.DTO.CompletarDatosDTO;
+import com.example.helpdesk2.DTO.PrivilegiosUsuarioDTO;
+import com.example.helpdesk2.moduloSeguridad.exceptions.ClavesNoCoincidenException;
+import com.example.helpdesk2.moduloSeguridad.exceptions.UsuarioNoEncontradoException;
 import com.example.helpdesk2.models.Usuario;
-import com.example.helpdesk2.models.UsuarioPrivilegio;
-import com.example.helpdesk2.repositories.UsuarioPrivilegioRepository;
+import com.example.helpdesk2.models.Privilegio;
+import com.example.helpdesk2.repositories.PrivilegioRepository;
 import com.example.helpdesk2.repositories.UsuarioRepository;
+import com.example.helpdesk2.services.UsuarioLogeadoService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,19 +19,19 @@ public class AutenticacionService {
 
     private final UsuarioRepository usuarioRepository;
     private final UsuarioLogeadoService usuarioLogeadoService;
-    private final UsuarioPrivilegioRepository usuarioPrivilegioRepository;
+    private final PrivilegioRepository privilegioRepository;
 
     public AutenticacionService(
             UsuarioRepository usuarioRepository,
             UsuarioLogeadoService usuarioLogeadoService,
-            UsuarioPrivilegioRepository usuarioPrivilegioRepository) {
+            PrivilegioRepository privilegioRepository) {
         this.usuarioRepository = usuarioRepository;
         this.usuarioLogeadoService = usuarioLogeadoService;
-        this.usuarioPrivilegioRepository = usuarioPrivilegioRepository;
+        this.privilegioRepository = privilegioRepository;
     }
 
-    public Usuario checkUsuarioPrimerLogin(String nombreUsuario, String clave){
-        Usuario u = usuarioRepository.buscarUsuarioPorCredenciales(nombreUsuario, clave).orElseThrow(UsuarioNoEncontrado::new);
+    public Usuario checkUsuarioPrimerLogin(CheckPrimerLoginDTO checkPrimerLoginDTO){
+        Usuario u = usuarioRepository.buscarUsuarioPorCredenciales(checkPrimerLoginDTO).orElseThrow(UsuarioNoEncontradoException::new);
         usuarioLogeadoService.setIdUsuario(u.getIdUsuario());
         usuarioLogeadoService.setNombreUsuario(u.getNombreUsuario());
         usuarioLogeadoService.setNombres(u.getNombres());
@@ -35,16 +39,16 @@ public class AutenticacionService {
         return u;
     }
 
-    public List<UsuarioPrivilegio> obtenerPrivilegiosUsuario(int idUsuario){
-        return usuarioPrivilegioRepository.buscarPrivilegiosDeUsuario(idUsuario);
+    public List<Privilegio> obtenerPrivilegiosUsuario(PrivilegiosUsuarioDTO privilegiosUsuarioDTO){
+        return privilegioRepository.buscarPrivilegiosDeUsuario(privilegiosUsuarioDTO.getIdUsuario());
     }
 
-    public void completarDatosUsuario(int idUsuario, String clave, String nuevaClave, int preguntaSeguridad, String rptaSecreta){
-        if(clave.equals(nuevaClave)){
-            usuarioRepository.completarDatosUsuario(idUsuario, clave, preguntaSeguridad, rptaSecreta);
+    public void completarDatosUsuario(CompletarDatosDTO completarDatosDTO) {
+        if(completarDatosDTO.getClave().equals(completarDatosDTO.getNuevaClave())){
+            usuarioRepository.completarDatosUsuario(completarDatosDTO);
         }
         else{
-            throw new ClavesNoCoinciden();
+            throw new ClavesNoCoincidenException();
         }
     }
 

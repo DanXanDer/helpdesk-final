@@ -1,19 +1,19 @@
-package com.example.helpdesk2.moduloSeguridad.DTO;
+package com.example.helpdesk2.DTO;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class ValidarRptaSecretaRequest {
+public class ValidarRptaSecretaDTO {
 
     int idUsuario;
     @NotBlank(message = "El campo de respuesta secreta no debe estar vacío")
     private String rptaSecreta;
 
-    public ValidarRptaSecretaRequest(int idUsuario, String rptaSecreta) {
+    public ValidarRptaSecretaDTO(int idUsuario, String rptaSecreta) {
         this.idUsuario = idUsuario;
         this.rptaSecreta = rptaSecreta;
     }
 
-    public ValidarRptaSecretaRequest() {
+    public ValidarRptaSecretaDTO() {
     }
 
     public int getIdUsuario() {

@@ -1,16 +1,16 @@
 package com.example.helpdesk2.models;
 
-public class UsuarioPrivilegio {
+public class Privilegio {
     private int idPrivilegio;
     private String label;
     private String path;
     private String button;
     private String icon;
 
-    public UsuarioPrivilegio() {
+    public Privilegio() {
     }
 
-    public UsuarioPrivilegio(int idPrivilegio, String label, String path, String button, String icon) {
+    public Privilegio(int idPrivilegio, String label, String path, String button, String icon) {
         this.idPrivilegio = idPrivilegio;
         this.label = label;
         this.path = path;

@@ -12,7 +12,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class ModuloSeguridadExceptionHandler {
 
-    @ExceptionHandler(UsuarioNoEncontrado.class)
+    @ExceptionHandler(UsuarioNoEncontradoException.class)
     public ResponseEntity<Map<String, Object>> exceptionUsuarioNoEncontrado(){
         ErrorDetalles errorDetalles = new ErrorDetalles();
         errorDetalles.setMensaje("El usuario no existe o se encuentra deshabilitado");
@@ -24,7 +24,7 @@ public class ModuloSeguridadExceptionHandler {
                 .body(respuesta);
     }
 
-    @ExceptionHandler(ClavesNoCoinciden.class)
+    @ExceptionHandler(ClavesNoCoincidenException.class)
     public ResponseEntity<Map<String, Object>> exceptionClavesNoCoinciden(){
         ErrorDetalles errorDetalles = new ErrorDetalles();
         errorDetalles.setMensaje("Las claves no coinciden");
@@ -36,7 +36,7 @@ public class ModuloSeguridadExceptionHandler {
                 .body(respuesta);
     }
 
-    @ExceptionHandler(RespuestaSecretaIncorrecta.class)
+    @ExceptionHandler(RespuestaSecretaIncorrectaException.class)
     public ResponseEntity<Map<String, Object>> exceptionRespuestaSecretaIncorrecta(){
         ErrorDetalles errorDetalles = new ErrorDetalles();
         errorDetalles.setMensaje("La respuesta secreta es incorrecta");

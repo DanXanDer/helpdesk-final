@@ -1,22 +1,21 @@
-package com.example.helpdesk2.moduloSeguridad.DTO;
+package com.example.helpdesk2.DTO;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class ReestablecerClaveRequest {
+public class ReestablecerClaveDTO {
     private int idUsuario;
     @Size(min = 8, max = 20, message = "La clave debe tener entre 8 y 20 caracteres")
     private String clave;
     @Size(min = 8, max = 20, message = "La clave debe tener entre 8 y 20 caracteres")
     private String reClave;
 
-    public ReestablecerClaveRequest(int idUsuario, String clave, String reClave) {
+    public ReestablecerClaveDTO(int idUsuario, String clave, String reClave) {
         this.idUsuario = idUsuario;
         this.clave = clave;
         this.reClave = reClave;
     }
 
-    public ReestablecerClaveRequest() {
+    public ReestablecerClaveDTO() {
     }
 
     public int getIdUsuario() {

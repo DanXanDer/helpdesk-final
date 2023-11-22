@@ -1,9 +1,9 @@
-package com.example.helpdesk2.moduloSeguridad.DTO;
+package com.example.helpdesk2.DTO;
 
 
 import jakarta.validation.constraints.NotBlank;
 
-public class UsuarioRequest {
+public class CheckPrimerLoginDTO {
 
     @NotBlank(message = "El nombre de usuario no puede estar vacío")
     private String nombreUsuario;
@@ -11,7 +11,7 @@ public class UsuarioRequest {
     @NotBlank(message = "La clave no puede estar vacía")
     private String clave;
 
-    public UsuarioRequest(String nombreUsuario, String clave) {
+    public CheckPrimerLoginDTO(String nombreUsuario, String clave) {
         this.nombreUsuario = nombreUsuario;
         this.clave = clave;
     }

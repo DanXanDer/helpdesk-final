@@ -1,9 +1,15 @@
 package com.example.helpdesk2.moduloGestionSistema.controllers;
 
+import com.example.helpdesk2.DTO.CambiarEstadoUsuarioDTO;
+import com.example.helpdesk2.DTO.RegistrarTrabajadorDTO;
+import com.example.helpdesk2.DTO.RegistrarUsuarioDTO;
+import com.example.helpdesk2.models.Privilegio;
 import com.example.helpdesk2.models.Usuario;
 import com.example.helpdesk2.moduloGestionSistema.services.GestionarUsuariosService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -24,8 +30,7 @@ public class GestionarUsuariosController {
     public ResponseEntity<Map<String, Object>> obtenerUsuarios(
             @RequestParam(required = false) String filtro,
             @RequestParam(required = false) String valor){
-        List<Usuario> usuarios;
-        usuarios = gestionarUsuariosService.obtenerUsuarios(filtro, valor);
+        List<Usuario> usuarios = gestionarUsuariosService.obtenerUsuarios(filtro, valor);
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("ok", true);
         respuesta.put("usuarios", usuarios);
@@ -34,5 +39,38 @@ public class GestionarUsuariosController {
                 .body(respuesta);
     }
 
+    @PostMapping("/cambiar-estado-usuario")
+    public ResponseEntity<Map<String, Object>> cambiarEstadoUsuario(@RequestBody CambiarEstadoUsuarioDTO cambiarEstadoUsuarioDTO){
+        gestionarUsuariosService.cambiarEstadoUsuario(cambiarEstadoUsuarioDTO);
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", true);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respuesta);
+    }
+
+    @GetMapping("/privilegios-todos")
+    public ResponseEntity<Map<String, Object>> privilegiosTodos(){
+        List<Privilegio> privilegios = gestionarUsuariosService.obtenerTodosPrivilegios();
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", true);
+        respuesta.put("privilegios", privilegios);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respuesta);
+    }
+
+    @Transactional
+    @PostMapping("/crear-trabajador")
+    public ResponseEntity<Map<String, Object>> crearTrabajador(@Valid @RequestBody RegistrarTrabajadorDTO registrarTrabajadorDTO){
+        int idUsuario = gestionarUsuariosService.crearUsuario(registrarTrabajadorDTO);
+        registrarTrabajadorDTO.setIdUsuario(idUsuario);
+        gestionarUsuariosService.crearTrabajador(registrarTrabajadorDTO);
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", true);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respuesta);
+    }
 
 }

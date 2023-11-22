@@ -1,9 +1,9 @@
-package com.example.helpdesk2.moduloSeguridad.DTO;
+package com.example.helpdesk2.DTO;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class CompletarDatosRequest {
+public class CompletarDatosDTO {
 
     private int idUsuario;
 
@@ -18,7 +18,7 @@ public class CompletarDatosRequest {
     @NotBlank(message = "La respuesta secreta no puede estar vacía")
     private String rptaSecreta;
 
-    public CompletarDatosRequest(int idUsuario, String clave, String nuevaClave, int preguntaSeguridad, String rptaSecreta) {
+    public CompletarDatosDTO(int idUsuario, String clave, String nuevaClave, int preguntaSeguridad, String rptaSecreta) {
         this.idUsuario = idUsuario;
         this.clave = clave;
         this.nuevaClave = nuevaClave;
