@@ -38,6 +38,4 @@ public class Area {
         this.nombreArea = nombreArea;
     }
 
-
-
 }

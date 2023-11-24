@@ -1,6 +1,7 @@
 package com.example.helpdesk2.moduloGestionSistema.controllers;
 
 import com.example.helpdesk2.DTO.CambiarEstadoUsuarioDTO;
+import com.example.helpdesk2.DTO.RegistrarClienteDTO;
 import com.example.helpdesk2.DTO.RegistrarTrabajadorDTO;
 import com.example.helpdesk2.DTO.RegistrarUsuarioDTO;
 import com.example.helpdesk2.models.Privilegio;
@@ -73,6 +74,19 @@ public class GestionarUsuariosController {
                 .body(respuesta);
     }
 
+    @Transactional
+    @PostMapping("/crear-cliente")
+    public ResponseEntity<Map<String, Object>> crearCliente(@Valid @RequestBody RegistrarClienteDTO registrarClienteDTO){
+        int idUsuario = gestionarUsuariosService.crearUsuario(registrarClienteDTO);
+        registrarClienteDTO.setIdUsuario(idUsuario);
+        gestionarUsuariosService.crearCliente(registrarClienteDTO);
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", true);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respuesta);
+    }
+
     @GetMapping("/obtener-empresas")
     public ResponseEntity<Map<String, Object>> obtenerEmpresas(){
         Map<String, Object> respuesta = new HashMap<>();
@@ -102,4 +116,6 @@ public class GestionarUsuariosController {
                 .status(HttpStatus.OK)
                 .body(respuesta);
     }
+
+
 }

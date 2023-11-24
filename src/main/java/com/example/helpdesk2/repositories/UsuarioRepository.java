@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
 
+
     @Query("SELECT u.id_usuario, u.nombre_usuario, u.nombres, u.apellidos FROM usuario u WHERE " +
             "nombre_usuario = :#{#checkPrimerLoginDTO.nombreUsuario} AND " +
             "clave = :#{#checkPrimerLoginDTO.clave} " +
@@ -75,8 +76,5 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
     @Query("SELECT LAST_INSERT_ID()")
     int obtenerUltimoIdUsuario();
 
-    @Modifying
-    @Query("INSERT INTO trabajador (id_usuario, nivel) VALUES (:idUsuario, :nivel)")
-    void registrarTrabajador(int idUsuario, int nivel);
 
 }

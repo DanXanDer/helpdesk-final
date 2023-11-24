@@ -10,4 +10,5 @@ public interface AreaRepository extends CrudRepository<Area, Integer> {
 
     @Query("SELECT * FROM area WHERE id_sede = :idSede")
     List<Area> buscarAreasPorSede(int idSede);
+
 }

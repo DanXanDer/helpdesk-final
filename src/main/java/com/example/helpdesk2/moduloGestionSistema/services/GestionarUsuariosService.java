@@ -1,6 +1,7 @@
 package com.example.helpdesk2.moduloGestionSistema.services;
 
 import com.example.helpdesk2.DTO.CambiarEstadoUsuarioDTO;
+import com.example.helpdesk2.DTO.RegistrarClienteDTO;
 import com.example.helpdesk2.DTO.RegistrarTrabajadorDTO;
 import com.example.helpdesk2.DTO.RegistrarUsuarioDTO;
 import com.example.helpdesk2.models.*;
@@ -18,18 +19,17 @@ public class GestionarUsuariosService {
     private final EmpresaRepository empresaRepository;
     private final SedeRepository sedeRepository;
     private final AreaRepository areaRepository;
+    private final TrabajadorRepository trabajadorRepository;
+    private final ClienteRepository clienteRepository;
 
-    public GestionarUsuariosService(
-            UsuarioRepository usuarioRepository,
-            PrivilegioRepository privilegioRepository,
-            EmpresaRepository empresaRepository,
-            SedeRepository sedeRepository,
-            AreaRepository areaRepository) {
+    public GestionarUsuariosService(UsuarioRepository usuarioRepository, PrivilegioRepository privilegioRepository, EmpresaRepository empresaRepository, SedeRepository sedeRepository, AreaRepository areaRepository, TrabajadorRepository trabajadorRepository, ClienteRepository clienteRepository) {
         this.usuarioRepository = usuarioRepository;
         this.privilegioRepository = privilegioRepository;
         this.empresaRepository = empresaRepository;
         this.sedeRepository = sedeRepository;
         this.areaRepository = areaRepository;
+        this.trabajadorRepository = trabajadorRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     public List<Usuario> obtenerUsuarios(String filtro, String valor) {
@@ -65,7 +65,11 @@ public class GestionarUsuariosService {
     }
 
     public void crearTrabajador(RegistrarTrabajadorDTO registrarTrabajadorDTO) {
-        usuarioRepository.registrarTrabajador(registrarTrabajadorDTO.getIdUsuario(), registrarTrabajadorDTO.getNivel());
+        trabajadorRepository.registrarTrabajador(registrarTrabajadorDTO);
+    }
+
+    public void crearCliente(RegistrarClienteDTO registrarClienteDTO){
+        clienteRepository.registrarCliente(registrarClienteDTO);
     }
 
     public List<Empresa> obtenerEmpresas(){

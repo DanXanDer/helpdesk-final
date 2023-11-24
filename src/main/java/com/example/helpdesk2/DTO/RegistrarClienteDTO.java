@@ -1,19 +1,27 @@
 package com.example.helpdesk2.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 public class RegistrarClienteDTO extends RegistrarUsuarioDTO {
 
-    private int idEmpresa;
-    private int idSede;
+    private int idUsuario;
+
+    @NotNull(message = "Seleccione un área")
     private int idArea;
+
+    @NotBlank(message = "Ingrese el ID de AnyDesk")
     private String anydesk;
+
+    @NotBlank(message = "Ingrese el ID de TeamViewer")
     private String teamviewer;
 
-    public RegistrarClienteDTO(String nombreUsuario, String clave, String nombres, String apellidos, String correo, String tipo, List<Integer> privilegios, int idEmpresa, int idSede, int idArea, String anydesk, String teamviewer) {
+    public RegistrarClienteDTO(String nombreUsuario, String clave, String nombres, String apellidos, String correo, String tipo, List<Integer> privilegios, int idUsuario, int idArea, String anydesk, String teamviewer) {
         super(nombreUsuario, clave, nombres, apellidos, correo, tipo, privilegios);
-        this.idEmpresa = idEmpresa;
-        this.idSede = idSede;
+        this.idUsuario = idUsuario;
         this.idArea = idArea;
         this.anydesk = anydesk;
         this.teamviewer = teamviewer;
@@ -23,31 +31,22 @@ public class RegistrarClienteDTO extends RegistrarUsuarioDTO {
         super(nombreUsuario, clave, nombres, apellidos, correo, tipo, privilegios);
     }
 
-    public RegistrarClienteDTO() {
-    }
-
-    public RegistrarClienteDTO(int idEmpresa, int idSede, int idArea, String anydesk, String teamviewer) {
-        this.idEmpresa = idEmpresa;
-        this.idSede = idSede;
+    public RegistrarClienteDTO(int idUsuario, int idArea, String anydesk, String teamviewer) {
+        this.idUsuario = idUsuario;
         this.idArea = idArea;
         this.anydesk = anydesk;
         this.teamviewer = teamviewer;
     }
 
-    public int getIdEmpresa() {
-        return idEmpresa;
+    public RegistrarClienteDTO() {
     }
 
-    public void setIdEmpresa(int idEmpresa) {
-        this.idEmpresa = idEmpresa;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    public int getIdSede() {
-        return idSede;
-    }
-
-    public void setIdSede(int idSede) {
-        this.idSede = idSede;
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public int getIdArea() {

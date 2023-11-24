@@ -9,4 +9,5 @@ import java.util.List;
 public interface SedeRepository extends CrudRepository<Sede, Integer> {
     @Query("SELECT * FROM sede WHERE id_empresa = :idEmpresa")
     List<Sede> buscarSedesPorEmpresa(int idEmpresa);
+
 }
