@@ -13,7 +13,7 @@ import java.util.Map;
 public class ModuloGestionSistemaExceptionHandler {
 
     @ExceptionHandler(UsuariosNoEncontradosException.class)
-    public ResponseEntity<Map<String, Object>> exceptionUsuariosNoEncontrados(){
+    public ResponseEntity<Map<String, Object>> handleUsuariosNoEncontrados(){
         ErrorDetalles errorDetalles = new ErrorDetalles();
         errorDetalles.setMensaje("No se encontraron usuarios");
         Map<String, Object> respuesta = new HashMap<>();
@@ -25,7 +25,7 @@ public class ModuloGestionSistemaExceptionHandler {
     }
 
     @ExceptionHandler(NombreUsuarioExisteException.class)
-    public ResponseEntity<Map<String, Object>> exceptionNombreUsuarioExiste(){
+    public ResponseEntity<Map<String, Object>> handleNombreUsuarioNoExiste(){
         ErrorDetalles errorDetalles = new ErrorDetalles();
         errorDetalles.setMensaje("El nombre de usuario ya existe");
         Map<String, Object> respuesta = new HashMap<>();

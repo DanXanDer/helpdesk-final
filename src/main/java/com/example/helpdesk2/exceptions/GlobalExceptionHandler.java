@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,5 +40,15 @@ public class GlobalExceptionHandler {
         return respuesta;
     }
 
+    @ExceptionHandler(IOException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> exceptionIOException(IOException e){
+        ErrorDetalles errorDetalles = new ErrorDetalles();
+        errorDetalles.setMensaje("Hubo un error, intente nuevamente");
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", false);
+        respuesta.put("error", errorDetalles);
+        return respuesta;
+    }
 
 }

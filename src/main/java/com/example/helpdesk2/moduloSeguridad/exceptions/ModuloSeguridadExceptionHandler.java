@@ -13,7 +13,7 @@ import java.util.Map;
 public class ModuloSeguridadExceptionHandler {
 
     @ExceptionHandler(UsuarioNoEncontradoException.class)
-    public ResponseEntity<Map<String, Object>> exceptionUsuarioNoEncontrado(){
+    public ResponseEntity<Map<String, Object>> handleUsuarioNoEncontrado(){
         ErrorDetalles errorDetalles = new ErrorDetalles();
         errorDetalles.setMensaje("El usuario no existe o se encuentra deshabilitado");
         Map<String, Object> respuesta = new HashMap<>();
@@ -25,7 +25,7 @@ public class ModuloSeguridadExceptionHandler {
     }
 
     @ExceptionHandler(ClavesNoCoincidenException.class)
-    public ResponseEntity<Map<String, Object>> exceptionClavesNoCoinciden(){
+    public ResponseEntity<Map<String, Object>> handleClavesNoCoinciden(){
         ErrorDetalles errorDetalles = new ErrorDetalles();
         errorDetalles.setMensaje("Las claves no coinciden");
         Map<String, Object> respuesta = new HashMap<>();
@@ -37,7 +37,7 @@ public class ModuloSeguridadExceptionHandler {
     }
 
     @ExceptionHandler(RespuestaSecretaIncorrectaException.class)
-    public ResponseEntity<Map<String, Object>> exceptionRespuestaSecretaIncorrecta(){
+    public ResponseEntity<Map<String, Object>> handleRespuestaSecretaIncorrecta(){
         ErrorDetalles errorDetalles = new ErrorDetalles();
         errorDetalles.setMensaje("La respuesta secreta es incorrecta");
         Map<String, Object> respuesta = new HashMap<>();
