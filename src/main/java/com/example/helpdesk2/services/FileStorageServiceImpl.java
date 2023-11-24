@@ -22,10 +22,11 @@ public class FileStorageServiceImpl {
         return reporteFolder;
     }
 
-    public void guardar(MultipartFile archivo, Path reporteFolder) throws IOException {
+    public String guardar(MultipartFile imagen, Path reporteFolder) throws IOException {
         long timestamp = System.currentTimeMillis();
-        String nombreArchivoUnico = timestamp + "-" + archivo.getOriginalFilename();
-        Files.copy(archivo.getInputStream(), reporteFolder.resolve(nombreArchivoUnico), StandardCopyOption.REPLACE_EXISTING);
+        String nombreImagen = timestamp + "-" + imagen.getOriginalFilename();
+        Files.copy(imagen.getInputStream(), reporteFolder.resolve(nombreImagen), StandardCopyOption.REPLACE_EXISTING);
+        return nombreImagen;
     }
 
     public Resource cargar(String archivo) {

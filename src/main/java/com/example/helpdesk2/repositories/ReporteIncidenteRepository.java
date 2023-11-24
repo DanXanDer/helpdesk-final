@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface ReporteIncidenteRepository extends CrudRepository<ReporteIncidente, Integer> {
     @Modifying
     @Query("INSERT INTO reporte_incidente (id_cliente, descripcion) VALUES (:idCliente, :descripcion)")
-    void insertarReporteIncidente(int idCliente, String descripcion);
+    void guardarReporteIncidente(int idCliente, String descripcion);
 
     @Query("SELECT LAST_INSERT_ID()")
     int obtenerUltimoIDReporteIncidente();
