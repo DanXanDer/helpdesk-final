@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
 
 
-    @Query("SELECT u.id_usuario, u.nombre_usuario, u.nombres, u.apellidos FROM usuario u WHERE " +
+    @Query("SELECT u.id_usuario, u.nombre_usuario, u.nombres, u.apellidos, u.primer_login FROM usuario u WHERE " +
             "nombre_usuario = :#{#checkPrimerLoginDTO.nombreUsuario} AND " +
             "clave = :#{#checkPrimerLoginDTO.clave} " +
             "AND estado = 1")
@@ -35,8 +35,6 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
             "primer_login = 0")
     Optional<Usuario> buscarUsuarioPorDatos(ValidarDatosUsuarioDTO validarDatosUsuarioDTO);
 
-    @Query("SELECT nombre_pregunta_seguridad FROM pregunta_seguridad WHERE id_pregunta_seguridad = :idPreguntaSeguridad")
-    String buscarPreguntaSeguridad(int idPreguntaSeguridad);
 
     @Query("SELECT rpta_secreta FROM usuario WHERE id_usuario = :#{#validarRptaSecretaDTO.idUsuario}")
     String buscarRptaSecreta(ValidarRptaSecretaDTO validarRptaSecretaDTO);

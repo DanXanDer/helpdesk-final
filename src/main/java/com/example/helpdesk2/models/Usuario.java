@@ -10,12 +10,12 @@ public class Usuario {
     private String correo;
     private String rptaSecreta;
     private int estado;
-    private boolean primerLogin;
+    private int primerLogin;
 
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, int idPreguntaSeguridad, String nombreUsuario, String clave, String nombres, String apellidos, String correo, String rptaSecreta, int estado, boolean primerLogin) {
+    public Usuario(int idUsuario, int idPreguntaSeguridad, String nombreUsuario, String clave, String nombres, String apellidos, String correo, String rptaSecreta, int estado, int primerLogin) {
         this.idUsuario = idUsuario;
         this.idPreguntaSeguridad = idPreguntaSeguridad;
         this.nombreUsuario = nombreUsuario;
@@ -100,11 +100,11 @@ public class Usuario {
         this.estado = estado;
     }
 
-    public boolean isPrimerLogin() {
+    public int isPrimerLogin() {
         return primerLogin;
     }
 
-    public void setPrimerLogin(boolean primerLogin) {
+    public void setPrimerLogin(int primerLogin) {
         this.primerLogin = primerLogin;
     }
 }

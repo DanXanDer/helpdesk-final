@@ -25,7 +25,7 @@ public class AutenticacionController {
         this.autenticacionService = autenticacionService;
     }
 
-    @PostMapping("/primer-login")
+    @PostMapping("/check-primer-login")
     public ResponseEntity<Map<String, Object>> checkPrimerLogin(@Valid @RequestBody CheckPrimerLoginDTO checkPrimerLoginDTO) {
         Usuario usuario = autenticacionService.checkUsuarioPrimerLogin(checkPrimerLoginDTO);
         Map<String, Object> respuesta = new HashMap<>();
@@ -48,6 +48,15 @@ public class AutenticacionController {
                 .body(respuesta);
     }
 
+    @GetMapping("/preguntas-seguridad")
+    public ResponseEntity<Map<String, Object>> obtenerPreguntasSeguridad() {
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", true);
+        respuesta.put("preguntasSeguridad", autenticacionService.obtenerPreguntasSeguridad());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respuesta);
+    }
 
     @PostMapping("/completar-datos")
     public ResponseEntity<Map<String, Object>> completarDatos(@Valid @RequestBody CompletarDatosDTO completarDatosDTO) {
