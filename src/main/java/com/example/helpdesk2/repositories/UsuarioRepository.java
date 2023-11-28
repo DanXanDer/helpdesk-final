@@ -18,6 +18,9 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
             "AND estado = 1")
     Optional<Usuario> buscarUsuarioPorCredenciales(CheckPrimerLoginDTO checkPrimerLoginDTO);
 
+    @Query("SELECT u.id_usuario, u.nombre_usuario, u.nombres, u.apellidos FROM usuario u WHERE id_usuario = :idUsuario")
+    Usuario buscarUsuarioPorId(int idUsuario);
+
     @Modifying
     @Query("UPDATE usuario SET " +
             "primer_login = 0, " +

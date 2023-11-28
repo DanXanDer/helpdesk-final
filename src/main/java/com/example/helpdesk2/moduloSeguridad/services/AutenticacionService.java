@@ -2,16 +2,16 @@ package com.example.helpdesk2.moduloSeguridad.services;
 
 import com.example.helpdesk2.DTO.CheckPrimerLoginDTO;
 import com.example.helpdesk2.DTO.CompletarDatosDTO;
-import com.example.helpdesk2.DTO.PrivilegiosUsuarioDTO;
+import com.example.helpdesk2.DTO.LogearUsuarioDTO;
 import com.example.helpdesk2.models.PreguntaSeguridad;
 import com.example.helpdesk2.moduloSeguridad.exceptions.ClavesNoCoincidenException;
 import com.example.helpdesk2.moduloSeguridad.exceptions.UsuarioNoEncontradoException;
 import com.example.helpdesk2.models.Usuario;
-import com.example.helpdesk2.models.Privilegio;
 import com.example.helpdesk2.repositories.PreguntaSeguridadRepository;
 import com.example.helpdesk2.repositories.PrivilegioRepository;
+import com.example.helpdesk2.repositories.UsuarioPrivilegioRepository;
 import com.example.helpdesk2.repositories.UsuarioRepository;
-import com.example.helpdesk2.services.UsuarioLogeadoService;
+import com.example.helpdesk2.services.LoggedUserManagamentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,32 +20,35 @@ import java.util.List;
 public class AutenticacionService {
 
     private final UsuarioRepository usuarioRepository;
-    private final UsuarioLogeadoService usuarioLogeadoService;
+    private final LoggedUserManagamentService loggedUserManagamentService;
     private final PrivilegioRepository privilegioRepository;
     private final PreguntaSeguridadRepository preguntaSeguridadRepository;
+    private final UsuarioPrivilegioRepository usuarioPrivilegioRepository;
 
-    public AutenticacionService(UsuarioRepository usuarioRepository, UsuarioLogeadoService usuarioLogeadoService, PrivilegioRepository privilegioRepository, PreguntaSeguridadRepository preguntaSeguridadRepository) {
+    public AutenticacionService(UsuarioRepository usuarioRepository, LoggedUserManagamentService loggedUserManagamentService, PrivilegioRepository privilegioRepository, PreguntaSeguridadRepository preguntaSeguridadRepository, UsuarioPrivilegioRepository usuarioPrivilegioRepository) {
         this.usuarioRepository = usuarioRepository;
-        this.usuarioLogeadoService = usuarioLogeadoService;
+        this.loggedUserManagamentService = loggedUserManagamentService;
         this.privilegioRepository = privilegioRepository;
         this.preguntaSeguridadRepository = preguntaSeguridadRepository;
+        this.usuarioPrivilegioRepository = usuarioPrivilegioRepository;
     }
+
 
     public Usuario checkUsuarioPrimerLogin(CheckPrimerLoginDTO checkPrimerLoginDTO){
-        Usuario u = usuarioRepository.buscarUsuarioPorCredenciales(checkPrimerLoginDTO).orElseThrow(UsuarioNoEncontradoException::new);
-        usuarioLogeadoService.setIdUsuario(u.getIdUsuario());
-        usuarioLogeadoService.setNombreUsuario(u.getNombreUsuario());
-        usuarioLogeadoService.setNombres(u.getNombres());
-        usuarioLogeadoService.setApellidos(u.getApellidos());
-        return u;
+        return usuarioRepository.buscarUsuarioPorCredenciales(checkPrimerLoginDTO).orElseThrow(UsuarioNoEncontradoException::new);
     }
 
-    public List<Privilegio> obtenerPrivilegiosUsuario(PrivilegiosUsuarioDTO privilegiosUsuarioDTO){
-        return privilegioRepository.buscarPrivilegiosDeUsuario(privilegiosUsuarioDTO.getIdUsuario());
+    public void autenticarUsuario(LogearUsuarioDTO logearUsuarioDTO){
+        Usuario u = usuarioRepository.buscarUsuarioPorId(logearUsuarioDTO.getIdUsuario());
+        loggedUserManagamentService.setIdUsuario(u.getIdUsuario());
+        loggedUserManagamentService.setNombreUsuario(u.getNombreUsuario());
+        loggedUserManagamentService.setNombres(u.getNombres());
+        loggedUserManagamentService.setApellidos(u.getApellidos());
+        loggedUserManagamentService.setPrivilegios(privilegioRepository.buscarPrivilegiosDeUsuario(u.getIdUsuario()));
     }
 
     public void completarDatosUsuario(CompletarDatosDTO completarDatosDTO) {
-        if(completarDatosDTO.getClave().equals(completarDatosDTO.getNuevaClave())){
+        if(completarDatosDTO.getClave().equals(completarDatosDTO.getReClave())){
             usuarioRepository.completarDatosUsuario(completarDatosDTO);
         }
         else{

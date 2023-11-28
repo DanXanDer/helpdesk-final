@@ -1,16 +1,20 @@
 package com.example.helpdesk2.services;
 
+import com.example.helpdesk2.models.Privilegio;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.util.List;
+
 @Component
 @SessionScope
-public class UsuarioLogeadoService {
+public class LoggedUserManagamentService {
 
     private int idUsuario;
     private String nombreUsuario;
     private String nombres;
     private String apellidos;
+    private List<Privilegio> privilegios;
 
     public int getIdUsuario() {
         return idUsuario;
@@ -42,5 +46,13 @@ public class UsuarioLogeadoService {
 
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
+    }
+
+    public List<Privilegio> getPrivilegios() {
+        return privilegios;
+    }
+
+    public void setPrivilegios(List<Privilegio> privilegios) {
+        this.privilegios = privilegios;
     }
 }

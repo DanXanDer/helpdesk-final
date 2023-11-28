@@ -21,8 +21,9 @@ public class GestionarUsuariosService {
     private final AreaRepository areaRepository;
     private final TrabajadorRepository trabajadorRepository;
     private final ClienteRepository clienteRepository;
+    private final UsuarioPrivilegioRepository usuarioPrivilegioRepository;
 
-    public GestionarUsuariosService(UsuarioRepository usuarioRepository, PrivilegioRepository privilegioRepository, EmpresaRepository empresaRepository, SedeRepository sedeRepository, AreaRepository areaRepository, TrabajadorRepository trabajadorRepository, ClienteRepository clienteRepository) {
+    public GestionarUsuariosService(UsuarioRepository usuarioRepository, PrivilegioRepository privilegioRepository, EmpresaRepository empresaRepository, SedeRepository sedeRepository, AreaRepository areaRepository, TrabajadorRepository trabajadorRepository, ClienteRepository clienteRepository, UsuarioPrivilegioRepository usuarioPrivilegioRepository) {
         this.usuarioRepository = usuarioRepository;
         this.privilegioRepository = privilegioRepository;
         this.empresaRepository = empresaRepository;
@@ -30,7 +31,9 @@ public class GestionarUsuariosService {
         this.areaRepository = areaRepository;
         this.trabajadorRepository = trabajadorRepository;
         this.clienteRepository = clienteRepository;
+        this.usuarioPrivilegioRepository = usuarioPrivilegioRepository;
     }
+
 
     public List<Usuario> obtenerUsuarios(String filtro, String valor) {
         List<Usuario> usuarios;
@@ -59,7 +62,7 @@ public class GestionarUsuariosService {
         usuarioRepository.registrarUsuario(registrarUsuarioDTO);
         int idUsuario = usuarioRepository.obtenerUltimoIdUsuario();
         registrarUsuarioDTO.getPrivilegios().forEach(
-                idPrivilegio -> privilegioRepository.registrarPrivilegioUsuario(idUsuario, idPrivilegio)
+                idPrivilegio -> usuarioPrivilegioRepository.registrarPrivilegioUsuario(idUsuario, idPrivilegio)
         );
         return idUsuario;
     }

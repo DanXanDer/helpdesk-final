@@ -11,17 +11,20 @@ public class CompletarDatosDTO {
     private String clave;
 
     @Size(min = 8, max = 20, message = "La clave debe tener entre 8 y 20 caracteres")
-    private String nuevaClave;
+    private String reClave;
 
     private int preguntaSeguridad;
 
     @NotBlank(message = "La respuesta secreta no puede estar vacía")
     private String rptaSecreta;
 
-    public CompletarDatosDTO(int idUsuario, String clave, String nuevaClave, int preguntaSeguridad, String rptaSecreta) {
+    public CompletarDatosDTO() {
+    }
+
+    public CompletarDatosDTO(int idUsuario, String clave, String reClave, int preguntaSeguridad, String rptaSecreta) {
         this.idUsuario = idUsuario;
         this.clave = clave;
-        this.nuevaClave = nuevaClave;
+        this.reClave = reClave;
         this.preguntaSeguridad = preguntaSeguridad;
         this.rptaSecreta = rptaSecreta;
     }
@@ -42,12 +45,12 @@ public class CompletarDatosDTO {
         this.clave = clave;
     }
 
-    public String getNuevaClave() {
-        return nuevaClave;
+    public String getReClave() {
+        return reClave;
     }
 
-    public void setNuevaClave(String nuevaClave) {
-        this.nuevaClave = nuevaClave;
+    public void setReClave(String reClave) {
+        this.reClave = reClave;
     }
 
     public int getPreguntaSeguridad() {

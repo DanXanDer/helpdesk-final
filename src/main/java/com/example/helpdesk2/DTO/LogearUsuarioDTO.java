@@ -1,14 +1,14 @@
 package com.example.helpdesk2.DTO;
 
-public class PrivilegiosUsuarioDTO {
+public class LogearUsuarioDTO {
 
     private int idUsuario;
 
-    public PrivilegiosUsuarioDTO(int idUsuario) {
+    public LogearUsuarioDTO(int idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public PrivilegiosUsuarioDTO() {
+    public LogearUsuarioDTO() {
     }
 
     public int getIdUsuario() {

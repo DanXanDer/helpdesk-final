@@ -44,7 +44,6 @@ public class ReestablecerClaveController {
         reestablecerClaveService.validarRespuestaSecreta(validarRptaSecretaDTO);
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("ok", true);
-        respuesta.put("idUsuario", validarRptaSecretaDTO.getIdUsuario());
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(respuesta);
