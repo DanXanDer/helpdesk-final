@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
         });
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("ok", false);
-        respuesta.put("errores", errores);
+        respuesta.put("error", errores);
         return respuesta;
     }
 

@@ -8,6 +8,7 @@ public class Usuario {
     private String nombres;
     private String apellidos;
     private String correo;
+    private String tipo;
     private String rptaSecreta;
     private int estado;
     private int primerLogin;
@@ -15,7 +16,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, int idPreguntaSeguridad, String nombreUsuario, String clave, String nombres, String apellidos, String correo, String rptaSecreta, int estado, int primerLogin) {
+    public Usuario(int idUsuario, int idPreguntaSeguridad, String nombreUsuario, String clave, String nombres, String apellidos, String correo, String tipo, String rptaSecreta, int estado, int primerLogin) {
         this.idUsuario = idUsuario;
         this.idPreguntaSeguridad = idPreguntaSeguridad;
         this.nombreUsuario = nombreUsuario;
@@ -23,6 +24,7 @@ public class Usuario {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.correo = correo;
+        this.tipo = tipo;
         this.rptaSecreta = rptaSecreta;
         this.estado = estado;
         this.primerLogin = primerLogin;
@@ -84,6 +86,14 @@ public class Usuario {
         this.correo = correo;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     public String getRptaSecreta() {
         return rptaSecreta;
     }
@@ -100,7 +110,7 @@ public class Usuario {
         this.estado = estado;
     }
 
-    public int isPrimerLogin() {
+    public int getPrimerLogin() {
         return primerLogin;
     }
 

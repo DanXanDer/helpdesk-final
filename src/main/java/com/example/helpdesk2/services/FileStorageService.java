@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Service
-public class FileStorageServiceImpl {
+public class FileStorageService {
     private final Path root = Paths.get("src/main/resources/static/reportes");
 
     public Path crearDirectorio(int idReporteIncidente) throws IOException {
@@ -29,18 +29,11 @@ public class FileStorageServiceImpl {
         return nombreImagen;
     }
 
-    public Resource cargar(String archivo) {
-        try {
-            Path file = root.resolve(archivo);
-            Resource resource = new UrlResource(file.toUri());
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            } else {
-                throw new RuntimeException("Could not read the file!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Error: " + e.getMessage());
-        }
+    public Resource cargar(String archivo, int idReporte) throws IOException {
+        String nombreDirectorio = "reporte-" + idReporte;
+        Path rootReporte = root.resolve(nombreDirectorio);
+        Path file = rootReporte.resolve(archivo);
+        return new UrlResource(file.toUri());
     }
-
 }
+

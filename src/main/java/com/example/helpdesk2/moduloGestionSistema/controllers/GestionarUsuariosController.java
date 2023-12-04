@@ -31,9 +31,9 @@ public class GestionarUsuariosController {
     public ResponseEntity<Map<String, Object>> obtenerUsuarios(
             @RequestParam(required = false) String filtro,
             @RequestParam(required = false) String valor){
+        System.out.println("hola");
         List<Usuario> usuarios = gestionarUsuariosService.obtenerUsuarios(filtro, valor);
         Map<String, Object> respuesta = new HashMap<>();
-        respuesta.put("ok", true);
         respuesta.put("usuarios", usuarios);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -87,7 +87,7 @@ public class GestionarUsuariosController {
                 .body(respuesta);
     }
 
-    @GetMapping("/obtener-empresas")
+    @GetMapping("/empresas")
     public ResponseEntity<Map<String, Object>> obtenerEmpresas(){
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("ok", true);
@@ -97,7 +97,7 @@ public class GestionarUsuariosController {
                 .body(respuesta);
     }
 
-    @GetMapping("/obtener-sedes")
+    @GetMapping("/sedes")
     public ResponseEntity<Map<String, Object>> obtenerSedes(@RequestParam int idEmpresa){
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("ok", true);
@@ -107,7 +107,7 @@ public class GestionarUsuariosController {
                 .body(respuesta);
     }
 
-    @GetMapping("/obtener-areas")
+    @GetMapping("/areas")
     public ResponseEntity<Map<String, Object>> obtenerAreas(@RequestParam int idSede){
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("ok", true);

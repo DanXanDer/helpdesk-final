@@ -14,4 +14,6 @@ public interface TrabajadorRepository extends CrudRepository<Trabajador, Integer
             ":#{#registrarTrabajadorDTO.nivel})")
     void registrarTrabajador(RegistrarTrabajadorDTO registrarTrabajadorDTO);
 
+    @Query("SELECT * FROM trabajador WHERE id_usuario = :idUsuario")
+    Trabajador buscarTrabajadorPorIdUsuario(int idUsuario);
 }

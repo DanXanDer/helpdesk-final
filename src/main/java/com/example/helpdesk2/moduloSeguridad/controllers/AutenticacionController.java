@@ -7,12 +7,15 @@ import com.example.helpdesk2.DTO.CheckPrimerLoginDTO;
 import com.example.helpdesk2.models.Privilegio;
 import com.example.helpdesk2.moduloSeguridad.services.AutenticacionService;
 import com.example.helpdesk2.services.LoggedUserManagamentService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap; 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,13 +31,14 @@ public class AutenticacionController {
         this.loggedUserManagamentService = loggedUserManagamentService;
     }
 
+
     @PostMapping("/check-primer-login")
     public ResponseEntity<Map<String, Object>> checkPrimerLogin(@Valid @RequestBody CheckPrimerLoginDTO checkPrimerLoginDTO) {
         Usuario usuario = autenticacionService.checkUsuarioPrimerLogin(checkPrimerLoginDTO);
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("ok", true);
         respuesta.put("idUsuario", usuario.getIdUsuario());
-        respuesta.put("primerLogin", usuario.isPrimerLogin());
+        respuesta.put("primerLogin", usuario.getPrimerLogin());
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(respuesta);
@@ -44,12 +48,23 @@ public class AutenticacionController {
     public ResponseEntity<Map<String, Object>> logearUsuario(@RequestBody LogearUsuarioDTO logearUsuarioDTO) {
         autenticacionService.autenticarUsuario(logearUsuarioDTO);
         Map<String, Object> respuesta = new HashMap<>();
-        respuesta.put("ok", true);
         respuesta.put("idUsuario", loggedUserManagamentService.getIdUsuario());
-        respuesta.put("nombreUsuario", loggedUserManagamentService.getNombreUsuario());
         respuesta.put("nombres", loggedUserManagamentService.getNombres());
-        respuesta.put("apellidos", loggedUserManagamentService.getApellidos());
         respuesta.put("privilegios", loggedUserManagamentService.getPrivilegios());
+        respuesta.put("tipo", loggedUserManagamentService.getTipo());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respuesta);
+    }
+
+    @PostMapping("/logout-usuario")
+    public ResponseEntity<Map<String, Object>> logoutUsuario(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", true);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(respuesta);
@@ -74,5 +89,18 @@ public class AutenticacionController {
                 .status(HttpStatus.OK)
                 .body(respuesta);
     }
+
+    @GetMapping("/usuario-activo")
+    public ResponseEntity<Map<String, Object>> checkSesionActiva() {
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("idUsuario", loggedUserManagamentService.getIdUsuario());
+        respuesta.put("nombres", loggedUserManagamentService.getNombres());
+        respuesta.put("tipo", loggedUserManagamentService.getTipo());
+        respuesta.put("privilegios", loggedUserManagamentService.getPrivilegios());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respuesta);
+    }
+
 
 }

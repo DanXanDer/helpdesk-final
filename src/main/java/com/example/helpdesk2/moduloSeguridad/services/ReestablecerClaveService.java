@@ -1,6 +1,5 @@
 package com.example.helpdesk2.moduloSeguridad.services;
 
-import com.example.helpdesk2.models.PreguntaSeguridad;
 import com.example.helpdesk2.models.Usuario;
 import com.example.helpdesk2.DTO.ReestablecerClaveDTO;
 import com.example.helpdesk2.DTO.ValidarDatosUsuarioDTO;
@@ -11,8 +10,6 @@ import com.example.helpdesk2.moduloSeguridad.exceptions.UsuarioNoEncontradoExcep
 import com.example.helpdesk2.repositories.PreguntaSeguridadRepository;
 import com.example.helpdesk2.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ReestablecerClaveService {
@@ -41,7 +38,7 @@ public class ReestablecerClaveService {
 
     public void reestablecerClave(ReestablecerClaveDTO reestablecerClaveDTO) {
         if (reestablecerClaveDTO.getClave().equals(reestablecerClaveDTO.getReClave())) {
-            usuarioRepository.reestablecerClave(reestablecerClaveDTO);
+            usuarioRepository.actualizarClave(reestablecerClaveDTO);
         } else {
             throw new ClavesNoCoincidenException();
         }

@@ -11,9 +11,8 @@ import java.util.List;
 public class LoggedUserManagamentService {
 
     private int idUsuario;
-    private String nombreUsuario;
     private String nombres;
-    private String apellidos;
+    private String tipo;
     private List<Privilegio> privilegios;
 
     public int getIdUsuario() {
@@ -24,14 +23,6 @@ public class LoggedUserManagamentService {
         this.idUsuario = idUsuario;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
-
     public String getNombres() {
         return nombres;
     }
@@ -40,12 +31,12 @@ public class LoggedUserManagamentService {
         this.nombres = nombres;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public List<Privilegio> getPrivilegios() {

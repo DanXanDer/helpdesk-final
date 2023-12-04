@@ -41,10 +41,9 @@ public class AutenticacionService {
     public void autenticarUsuario(LogearUsuarioDTO logearUsuarioDTO){
         Usuario u = usuarioRepository.buscarUsuarioPorId(logearUsuarioDTO.getIdUsuario());
         loggedUserManagamentService.setIdUsuario(u.getIdUsuario());
-        loggedUserManagamentService.setNombreUsuario(u.getNombreUsuario());
         loggedUserManagamentService.setNombres(u.getNombres());
-        loggedUserManagamentService.setApellidos(u.getApellidos());
         loggedUserManagamentService.setPrivilegios(privilegioRepository.buscarPrivilegiosDeUsuario(u.getIdUsuario()));
+        loggedUserManagamentService.setTipo(u.getTipo());
     }
 
     public void completarDatosUsuario(CompletarDatosDTO completarDatosDTO) {

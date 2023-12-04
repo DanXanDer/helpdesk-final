@@ -18,7 +18,7 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
             "AND estado = 1")
     Optional<Usuario> buscarUsuarioPorCredenciales(CheckPrimerLoginDTO checkPrimerLoginDTO);
 
-    @Query("SELECT u.id_usuario, u.nombre_usuario, u.nombres, u.apellidos FROM usuario u WHERE id_usuario = :idUsuario")
+    @Query("SELECT u.id_usuario, u.nombres, u.tipo FROM usuario u WHERE id_usuario = :idUsuario")
     Usuario buscarUsuarioPorId(int idUsuario);
 
     @Modifying
@@ -44,9 +44,9 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
 
     @Modifying
     @Query("UPDATE usuario SET clave = :#{#reestablecerClaveDTO.clave} WHERE id_usuario = :#{#reestablecerClaveDTO.idUsuario}")
-    void reestablecerClave(ReestablecerClaveDTO reestablecerClaveDTO);
+    void actualizarClave(ReestablecerClaveDTO reestablecerClaveDTO);
 
-    @Query("SELECT u.nombre_usuario, u.nombres, u.apellidos, u.correo, u.tipo, u.estado " +
+    @Query("SELECT u.id_usuario, u.nombre_usuario, u.nombres, u.apellidos, u.correo, u.tipo, u.estado " +
             "FROM usuario u")
     Optional<List<Usuario>> buscarTodosLosUsuarios();
 
@@ -77,5 +77,11 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
     @Query("SELECT LAST_INSERT_ID()")
     int obtenerUltimoIdUsuario();
 
+    @Modifying
+    @Query("UPDATE usuario SET correo =:correo WHERE id_usuario =:idUsuario")
+    void actualizarCorreo(String correo, int idUsuario);
+
+    @Query("SELECT correo from usuario WHERE id_usuario = :idUsuario")
+    String buscarCorreoUsuarioPorId(int idUsuario);
 
 }
