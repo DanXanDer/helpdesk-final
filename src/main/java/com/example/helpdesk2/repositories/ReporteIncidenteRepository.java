@@ -28,6 +28,9 @@ public interface ReporteIncidenteRepository extends CrudRepository<ReporteIncide
     ReporteIncidente buscarReporteIncidente(int idReporteIncidente);
 
     @Modifying
-    @Query("UPDATE reporte_incidente SET estado = :#{#escogerTicketDTO.estado} WHERE id_reporte_incidente = :#{#escogerTicketDTO.idReporteIncidente}")
-    void actualizarEstadoReporteIncidente(EscogerTicketDTO escogerTicketDTO);
+    @Query("UPDATE reporte_incidente SET estado = :estado WHERE id_reporte_incidente = :idReporteIncidente")
+    void actualizarEstadoReporteIncidente(int idReporteIncidente, String estado);
+
+    @Query("SELECT * FROM reporte_incidente WHERE id_cliente = :idCliente")
+    List<ReporteIncidente> buscarReportesIncidentesCliente(int idCliente);
 }

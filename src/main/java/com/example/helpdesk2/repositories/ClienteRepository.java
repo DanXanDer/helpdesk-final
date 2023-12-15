@@ -1,9 +1,6 @@
 package com.example.helpdesk2.repositories;
 
-import com.example.helpdesk2.DTO.ActualizarDatosClienteDTO;
-import com.example.helpdesk2.DTO.CambiarClaveClienteDTO;
-import com.example.helpdesk2.DTO.ReestablecerClaveDTO;
-import com.example.helpdesk2.DTO.RegistrarClienteDTO;
+import com.example.helpdesk2.DTO.*;
 import com.example.helpdesk2.models.Cliente;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
@@ -32,5 +29,18 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
     @Modifying
     @Query("UPDATE usuario SET clave = :#{#cambiarClaveClienteDTO.clave} WHERE id_usuario = :idUsuario")
     void actualizarClave(CambiarClaveClienteDTO cambiarClaveClienteDTO, int idUsuario);
+
+    @Query("SELECT u.nombres, u.apellidos, u.correo, a.nombre_area, s.nombre_sede, e.nombre_empresa, c.anydesk, c.teamviewer " +
+            "FROM cliente c " +
+            "INNER JOIN usuario u " +
+            "ON c.id_usuario = u.id_usuario " +
+            "INNER JOIN area a " +
+            "ON c.id_area = a.id_area " +
+            "INNER JOIN sede s " +
+            "ON a.id_sede = s.id_sede " +
+            "INNER JOIN empresa e " +
+            "ON s.id_empresa = e.id_empresa " +
+            "WHERE c.id_cliente = :idCliente")
+    DatosClienteDTO buscarDatosCliente(int idCliente);
 
 }

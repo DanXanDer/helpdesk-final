@@ -7,7 +7,6 @@ import com.example.helpdesk2.moduloTrabajador.exceptions.ReporteNoEncontradoExce
 import com.example.helpdesk2.repositories.ImagenRepository;
 import com.example.helpdesk2.repositories.ReporteIncidenteRepository;
 import com.example.helpdesk2.repositories.TicketRepository;
-import com.example.helpdesk2.services.FileStorageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,12 +15,12 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class EscogerReporteIncidenteService {
+public class CrearTicketService {
     private final ReporteIncidenteRepository reporteIncidenteRepository;
     private final ImagenRepository imagenRepository;
     private final TicketRepository ticketRepository;
 
-    public EscogerReporteIncidenteService(ReporteIncidenteRepository reporteIncidenteRepository, ImagenRepository imagenRepository, TicketRepository ticketRepository) {
+    public CrearTicketService(ReporteIncidenteRepository reporteIncidenteRepository, ImagenRepository imagenRepository, TicketRepository ticketRepository) {
         this.reporteIncidenteRepository = reporteIncidenteRepository;
         this.imagenRepository = imagenRepository;
         this.ticketRepository = ticketRepository;
@@ -42,7 +41,7 @@ public class EscogerReporteIncidenteService {
 
     @Transactional
     public void escogerReporteIncidente(EscogerTicketDTO escogerTicketDTO, int idTrabajador) {
-        reporteIncidenteRepository.actualizarEstadoReporteIncidente(escogerTicketDTO);
+        reporteIncidenteRepository.actualizarEstadoReporteIncidente(escogerTicketDTO.getIdReporteIncidente(), escogerTicketDTO.getEstado());
         ticketRepository.guardarTicket(idTrabajador, escogerTicketDTO.getIdReporteIncidente());
     }
 

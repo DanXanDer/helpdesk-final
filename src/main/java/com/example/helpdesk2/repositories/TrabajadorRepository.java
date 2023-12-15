@@ -16,4 +16,7 @@ public interface TrabajadorRepository extends CrudRepository<Trabajador, Integer
 
     @Query("SELECT * FROM trabajador WHERE id_usuario = :idUsuario")
     Trabajador buscarTrabajadorPorIdUsuario(int idUsuario);
+
+    @Query("SELECT * FROM trabajador WHERE id_trabajador = :idTrabajador")
+    Trabajador buscarTrabajadorPorIdTrabajador(int idTrabajador);
 }
