@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @ComponentScan("com")
 public class AppConfig implements WebMvcConfigurer {
+
     @Bean
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
@@ -27,7 +28,8 @@ public class AppConfig implements WebMvcConfigurer {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
                         .allowedOrigins("http://localhost:5173")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Agrega OPTIONS aquí
+                        .allowedHeaders("*")  // Permite cualquier encabezado en las solicitudes OPTIONS
                         .allowCredentials(true)
                         .maxAge(3600);
             }

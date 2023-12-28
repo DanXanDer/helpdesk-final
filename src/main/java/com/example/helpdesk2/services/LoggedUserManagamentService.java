@@ -11,6 +11,7 @@ import java.util.List;
 public class LoggedUserManagamentService {
 
     private int idUsuario;
+    private String nombreUsuario;
     private String nombres;
     private String tipo;
     private List<Privilegio> privilegios;
@@ -21,6 +22,14 @@ public class LoggedUserManagamentService {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getNombres() {

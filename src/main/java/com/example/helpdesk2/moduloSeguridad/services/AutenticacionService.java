@@ -23,14 +23,12 @@ public class AutenticacionService {
     private final LoggedUserManagamentService loggedUserManagamentService;
     private final PrivilegioRepository privilegioRepository;
     private final PreguntaSeguridadRepository preguntaSeguridadRepository;
-    private final UsuarioPrivilegioRepository usuarioPrivilegioRepository;
 
-    public AutenticacionService(UsuarioRepository usuarioRepository, LoggedUserManagamentService loggedUserManagamentService, PrivilegioRepository privilegioRepository, PreguntaSeguridadRepository preguntaSeguridadRepository, UsuarioPrivilegioRepository usuarioPrivilegioRepository) {
+    public AutenticacionService(UsuarioRepository usuarioRepository, LoggedUserManagamentService loggedUserManagamentService, PrivilegioRepository privilegioRepository, PreguntaSeguridadRepository preguntaSeguridadRepository) {
         this.usuarioRepository = usuarioRepository;
         this.loggedUserManagamentService = loggedUserManagamentService;
         this.privilegioRepository = privilegioRepository;
         this.preguntaSeguridadRepository = preguntaSeguridadRepository;
-        this.usuarioPrivilegioRepository = usuarioPrivilegioRepository;
     }
 
 
@@ -41,6 +39,7 @@ public class AutenticacionService {
     public void autenticarUsuario(LogearUsuarioDTO logearUsuarioDTO){
         Usuario u = usuarioRepository.buscarUsuarioPorId(logearUsuarioDTO.getIdUsuario());
         loggedUserManagamentService.setIdUsuario(u.getIdUsuario());
+        loggedUserManagamentService.setNombreUsuario(u.getNombreUsuario());
         loggedUserManagamentService.setNombres(u.getNombres());
         loggedUserManagamentService.setPrivilegios(privilegioRepository.buscarPrivilegiosDeUsuario(u.getIdUsuario()));
         loggedUserManagamentService.setTipo(u.getTipo());
