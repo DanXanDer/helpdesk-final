@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class ActividadTicket {
     private int idActividadTicket;
     private int idTicket;
+    private String emisor;
     private String mensaje;
     private String estado;
     private Timestamp fecha;
@@ -12,9 +13,10 @@ public class ActividadTicket {
     public ActividadTicket() {
     }
 
-    public ActividadTicket(int idActividadTicket, int idTicket, String mensaje, String estado, Timestamp fecha) {
+    public ActividadTicket(int idActividadTicket, int idTicket, String emisor, String mensaje, String estado, Timestamp fecha) {
         this.idActividadTicket = idActividadTicket;
         this.idTicket = idTicket;
+        this.emisor = emisor;
         this.mensaje = mensaje;
         this.estado = estado;
         this.fecha = fecha;
@@ -34,6 +36,14 @@ public class ActividadTicket {
 
     public void setIdTicket(int idTicket) {
         this.idTicket = idTicket;
+    }
+
+    public String getEmisor() {
+        return emisor;
+    }
+
+    public void setEmisor(String emisor) {
+        this.emisor = emisor;
     }
 
     public String getMensaje() {

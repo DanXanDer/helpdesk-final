@@ -7,19 +7,17 @@ public class ReporteIncidente {
     private int idCliente;
     private String nombreIncidente;
     private String descripcion;
-    private int nivel;
     private String estado;
     private Timestamp fecha;
 
     public ReporteIncidente() {
     }
 
-    public ReporteIncidente(int idReporteIncidente, int idCliente, String nombreIncidente, String descripcion, int nivel, String estado, Timestamp fecha) {
+    public ReporteIncidente(int idReporteIncidente, int idCliente, String nombreIncidente, String descripcion, String estado, Timestamp fecha) {
         this.idReporteIncidente = idReporteIncidente;
         this.idCliente = idCliente;
         this.nombreIncidente = nombreIncidente;
         this.descripcion = descripcion;
-        this.nivel = nivel;
         this.estado = estado;
         this.fecha = fecha;
     }
@@ -54,14 +52,6 @@ public class ReporteIncidente {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public int getNivel() {
-        return nivel;
-    }
-
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
     }
 
     public String getEstado() {

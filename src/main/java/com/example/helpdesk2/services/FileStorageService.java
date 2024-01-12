@@ -15,23 +15,22 @@ import java.nio.file.StandardCopyOption;
 public class FileStorageService {
     private final Path root = Paths.get("src/main/resources/static/reportes");
 
-    public Path crearDirectorio(int idReporteIncidente) throws IOException {
-        String nombreDirectorio = "reporte-" + idReporteIncidente;
-        Path reporteFolder = root.resolve(nombreDirectorio);
-        Files.createDirectories(reporteFolder);
-        return reporteFolder;
+    public Path crearDirectorio(int id, String prefijo, Path rootPath) throws IOException {
+        String nombreDirectorio = prefijo + "-" + id;
+        Path directorio = rootPath == null ? root.resolve(nombreDirectorio) : rootPath.resolve(nombreDirectorio);
+        Files.createDirectories(directorio);
+        return directorio;
     }
 
-    public String guardar(MultipartFile imagen, Path reporteFolder) throws IOException {
+    public String guardar(MultipartFile imagen, Path folder) throws IOException {
         long timestamp = System.currentTimeMillis();
         String nombreImagen = timestamp + "-" + imagen.getOriginalFilename();
-        Files.copy(imagen.getInputStream(), reporteFolder.resolve(nombreImagen), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(imagen.getInputStream(), folder.resolve(nombreImagen), StandardCopyOption.REPLACE_EXISTING);
         return nombreImagen;
     }
 
-    public Resource cargar(String archivo, int idReporte) throws IOException {
-        String nombreDirectorio = "reporte-" + idReporte;
-        Path rootReporte = root.resolve(nombreDirectorio);
+    public Resource cargar(String archivo, String directorio) throws IOException {
+        Path rootReporte = root.resolve(directorio);
         Path file = rootReporte.resolve(archivo);
         return new UrlResource(file.toUri());
     }

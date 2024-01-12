@@ -52,7 +52,7 @@ public class CrearTicketController {
 
     @PostMapping("/reporte-incidente-imagen")
     public ResponseEntity<?> obtenerReporteIncidenteImagen(@RequestBody ObtenerReporteIncidenteImagenDTO obtenerReporteIncidenteImagenDTO) throws IOException {
-        Resource resource = fileStorageService.cargar(obtenerReporteIncidenteImagenDTO.getRutaImagen(), obtenerReporteIncidenteImagenDTO.getIdReporteIncidente());
+        Resource resource = fileStorageService.cargar(obtenerReporteIncidenteImagenDTO.getRutaImagen(), "reporte-" + obtenerReporteIncidenteImagenDTO.getIdReporteIncidente());
         String contentType = "application/octet-stream";
         String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
         return ResponseEntity.ok()

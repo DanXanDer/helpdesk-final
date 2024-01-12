@@ -1,12 +1,12 @@
-package com.example.helpdesk2.moduloGestionSistema.services;
+package com.example.helpdesk2.moduloAdministrador.services;
 
 import com.example.helpdesk2.DTO.CambiarEstadoUsuarioDTO;
 import com.example.helpdesk2.DTO.RegistrarClienteDTO;
 import com.example.helpdesk2.DTO.RegistrarTrabajadorDTO;
 import com.example.helpdesk2.DTO.RegistrarUsuarioDTO;
 import com.example.helpdesk2.models.*;
-import com.example.helpdesk2.moduloGestionSistema.exceptions.NombreUsuarioExisteException;
-import com.example.helpdesk2.moduloGestionSistema.exceptions.UsuariosNoEncontradosException;
+import com.example.helpdesk2.moduloAdministrador.exceptions.NombreUsuarioExisteException;
+import com.example.helpdesk2.moduloAdministrador.exceptions.UsuariosNoEncontradosException;
 import com.example.helpdesk2.repositories.*;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +41,7 @@ public class GestionarUsuariosService {
             usuarios = usuarioRepository.buscarUsuariosPorFiltro(filtro, valor)
                     .orElseThrow(UsuariosNoEncontradosException::new);
         } else {
-            usuarios = usuarioRepository.buscarTodosLosUsuarios()
+            usuarios = usuarioRepository.buscarUsuariosNoAdministradores()
                     .orElseThrow(UsuariosNoEncontradosException::new);
         }
         return usuarios;
@@ -49,10 +49,6 @@ public class GestionarUsuariosService {
 
     public void cambiarEstadoUsuario(CambiarEstadoUsuarioDTO cambiarEstadoUsuarioDTO) {
         usuarioRepository.cambiarEstadoUsuario(cambiarEstadoUsuarioDTO);
-    }
-
-    public List<Privilegio> obtenerTodosPrivilegios() {
-        return privilegioRepository.buscarTodosPrivilegios();
     }
 
     public int crearUsuario(RegistrarUsuarioDTO registrarUsuarioDTO) {
@@ -68,7 +64,7 @@ public class GestionarUsuariosService {
     }
 
     public void crearTrabajador(RegistrarTrabajadorDTO registrarTrabajadorDTO) {
-        trabajadorRepository.registrarTrabajador(registrarTrabajadorDTO);
+        trabajadorRepository.registrarTrabajador(registrarTrabajadorDTO.getIdUsuario());
     }
 
     public void crearCliente(RegistrarClienteDTO registrarClienteDTO){

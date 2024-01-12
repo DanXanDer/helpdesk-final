@@ -1,7 +1,7 @@
 package com.example.helpdesk2.moduloTrabajador.services;
 
 import com.example.helpdesk2.DTO.DatosClienteDTO;
-import com.example.helpdesk2.DTO.ActividadTicketDTO;
+import com.example.helpdesk2.DTO.CambiarEstadoTicketDTO;
 import com.example.helpdesk2.DTO.RegistrarMensajeTicketDTO;
 import com.example.helpdesk2.DTO.TicketAsignadoDTO;
 import com.example.helpdesk2.models.Imagen;
@@ -26,15 +26,10 @@ public class AtenderTicketService {
     private final MensajeTicketRepository mensajeTicketRepository;
     private final ActividadTicketRepository actividadTicketRepository;
     private final ReporteIncidenteRepository reporteIncidenteRepository;
+    private final MensajeImagenRepository mensajeImagenRepository;
+    private final ActividadTicketImagenRepository actividadTicketImagenRepository;
 
-    public AtenderTicketService(TicketRepository ticketRepository,
-                                TrabajadorRepository trabajadorRepository,
-                                ClienteRepository clienteRepository,
-                                ImagenRepository imagenRepository,
-                                MensajeRepository mensajeRepository,
-                                MensajeTicketRepository mensajeTicketRepository,
-                                ActividadTicketRepository actividadTicketRepository,
-                                ReporteIncidenteRepository reporteIncidenteRepository) {
+    public AtenderTicketService(TicketRepository ticketRepository, TrabajadorRepository trabajadorRepository, ClienteRepository clienteRepository, ImagenRepository imagenRepository, MensajeRepository mensajeRepository, MensajeTicketRepository mensajeTicketRepository, ActividadTicketRepository actividadTicketRepository, ReporteIncidenteRepository reporteIncidenteRepository, MensajeImagenRepository mensajeImagenRepository, ActividadTicketImagenRepository actividadTicketImagenRepository) {
         this.ticketRepository = ticketRepository;
         this.trabajadorRepository = trabajadorRepository;
         this.clienteRepository = clienteRepository;
@@ -43,6 +38,8 @@ public class AtenderTicketService {
         this.mensajeTicketRepository = mensajeTicketRepository;
         this.actividadTicketRepository = actividadTicketRepository;
         this.reporteIncidenteRepository = reporteIncidenteRepository;
+        this.mensajeImagenRepository = mensajeImagenRepository;
+        this.actividadTicketImagenRepository = actividadTicketImagenRepository;
     }
 
     public List<TicketAsignadoDTO> obtenerTicketsTrabajador(int idTrabajador) {
@@ -65,18 +62,22 @@ public class AtenderTicketService {
         return respuesta;
     }
 
-    @Transactional
-    public void registrarMensajeTicket(RegistrarMensajeTicketDTO registrarMensajeTicketDTO) {
-        mensajeRepository.guardarMensaje(registrarMensajeTicketDTO);
-        int idMensaje = mensajeRepository.obtenerUltimoIdInsertado();
-        mensajeTicketRepository.guardarMensajeTicket(registrarMensajeTicketDTO.getIdTicket(), idMensaje);
+    public List<Imagen> obtenerImagenesMensaje(int idMensaje) {
+        return imagenRepository.buscarImagenesMensaje(idMensaje);
     }
 
     @Transactional
-    public void atenderTicket(ActividadTicketDTO actividadTicketDTO) {
-        actividadTicketRepository.guardarActividadTicket(actividadTicketDTO.getIdTicket(), actividadTicketDTO.getMensaje(), actividadTicketDTO.getEstado());
-        ticketRepository.actualizarEstadoTicket(actividadTicketDTO.getEstado(), actividadTicketDTO.getIdTicket());
-        reporteIncidenteRepository.actualizarEstadoReporteIncidente(actividadTicketDTO.getIdReporteIncidente(), actividadTicketDTO.getEstado());
+    public int registrarMensajeTicket(RegistrarMensajeTicketDTO registrarMensajeTicketDTO) {
+        mensajeRepository.guardarMensaje(registrarMensajeTicketDTO);
+        int idMensaje = mensajeRepository.obtenerUltimoIdInsertado();
+        mensajeTicketRepository.guardarMensajeTicket(registrarMensajeTicketDTO.getIdTicket(), idMensaje);
+        return idMensaje;
+    }
+
+    public void registrarMensajeImagen(int idMensaje, String nombreImagen) {
+        imagenRepository.guardarImagen(nombreImagen);
+        int idImagen = imagenRepository.obtenerUltimoIDImagen();
+        mensajeImagenRepository.guardarMensajeImagen(idMensaje, idImagen);
     }
 
     public List<Mensaje> obtenerMensajesTicket(int idTicket) {

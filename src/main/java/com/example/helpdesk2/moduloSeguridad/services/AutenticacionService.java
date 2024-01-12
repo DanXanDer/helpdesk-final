@@ -41,6 +41,7 @@ public class AutenticacionService {
         loggedUserManagamentService.setIdUsuario(u.getIdUsuario());
         loggedUserManagamentService.setNombreUsuario(u.getNombreUsuario());
         loggedUserManagamentService.setNombres(u.getNombres());
+        loggedUserManagamentService.setApellidos(u.getApellidos());
         loggedUserManagamentService.setPrivilegios(privilegioRepository.buscarPrivilegiosDeUsuario(u.getIdUsuario()));
         loggedUserManagamentService.setTipo(u.getTipo());
     }

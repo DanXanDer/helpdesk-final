@@ -18,7 +18,7 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
             "AND estado = 1")
     Optional<Usuario> buscarUsuarioPorCredenciales(CheckPrimerLoginDTO checkPrimerLoginDTO);
 
-    @Query("SELECT u.id_usuario, u.nombres, u.tipo FROM usuario u WHERE id_usuario = :idUsuario")
+    @Query("SELECT u.id_usuario, u.nombres, u.apellidos, u.tipo FROM usuario u WHERE id_usuario = :idUsuario")
     Usuario buscarUsuarioPorId(int idUsuario);
 
     @Modifying
@@ -47,8 +47,8 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
     void actualizarClave(ReestablecerClaveDTO reestablecerClaveDTO);
 
     @Query("SELECT u.id_usuario, u.nombre_usuario, u.nombres, u.apellidos, u.correo, u.tipo, u.estado " +
-            "FROM usuario u")
-    Optional<List<Usuario>> buscarTodosLosUsuarios();
+            "FROM usuario u WHERE u.tipo != 'Administrador'")
+    Optional<List<Usuario>> buscarUsuariosNoAdministradores();
 
     @Query("SELECT u.id_usuario, u.nombre_usuario, u.nombres, u.apellidos FROM usuario u WHERE " +
             "(:filtro = 'nombre_usuario' AND u.nombre_usuario LIKE CONCAT(:valor, '%')) OR " +

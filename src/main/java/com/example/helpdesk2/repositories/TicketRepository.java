@@ -15,17 +15,26 @@ public interface TicketRepository extends CrudRepository<Ticket, Integer> {
     @Query("INSERT INTO ticket (id_trabajador, id_reporte_incidente) VALUES (:idTrabajador, :idReporteIncidente)")
     void guardarTicket(int idTrabajador, int idReporteIncidente);
 
-    @Query("SELECT t.id_ticket, t.id_reporte_incidente, t.estado, ri.id_cliente, ri.nombre_incidente, ri.descripcion, ri.nivel, ri.fecha " +
+    @Query("SELECT t.id_ticket, t.id_trabajador, t.id_reporte_incidente, t.estado, " +
+            "c.id_cliente, u_cliente.nombres as nombres_cliente, u_cliente.apellidos as apellidos_cliente, " +
+            "u_trabajador.nombres as nombres_trabajador, u_trabajador.apellidos as apellidos_trabajador, " +
+            "ri.nombre_incidente, ri.descripcion, ri.fecha " +
             "FROM ticket t " +
-            "INNER JOIN reporte_incidente ri " +
-            "ON t.id_reporte_incidente = ri.id_reporte_incidente " +
-            "WHERE t.id_trabajador = :idTrabajador " +
-            "AND ri.nivel <= (SELECT nivel FROM trabajador WHERE id_trabajador = :idTrabajador) " +
-            "AND t.estado = 'En atención'")
+            "INNER JOIN reporte_incidente ri ON t.id_reporte_incidente = ri.id_reporte_incidente " +
+            "INNER JOIN cliente c ON ri.id_cliente = c.id_cliente " +
+            "INNER JOIN usuario u_cliente ON c.id_usuario = u_cliente.id_usuario " +
+            "LEFT JOIN usuario u_trabajador ON t.id_trabajador = u_trabajador.id_usuario")
+    List<TicketAsignadoDTO> buscarTickets();
+
+    @Query("SELECT t.id_ticket, t.id_reporte_incidente, t.estado, c.id_cliente, u.nombres, u.apellidos, ri.nombre_incidente, ri.descripcion, ri.fecha " +
+            "FROM ticket t " +
+            "INNER JOIN reporte_incidente ri ON t.id_reporte_incidente = ri.id_reporte_incidente " +
+            "INNER JOIN cliente c ON ri.id_cliente = c.id_cliente " +
+            "INNER JOIN usuario u ON c.id_usuario = u.id_usuario " +
+            "WHERE t.id_trabajador = :idTrabajador")
     Optional<List<TicketAsignadoDTO>> buscarTicketsTrabajador(int idTrabajador);
 
-
-    @Query("SELECT t.id_ticket, t.id_reporte_incidente, t.estado, ri.id_cliente, ri.nombre_incidente, ri.descripcion, ri.nivel, ri.fecha " +
+    @Query("SELECT t.id_ticket, t.id_reporte_incidente, t.estado, ri.id_cliente, ri.nombre_incidente, ri.descripcion, ri.fecha " +
             "FROM ticket t " +
             "INNER JOIN reporte_incidente ri " +
             "ON t.id_reporte_incidente = ri.id_reporte_incidente " +

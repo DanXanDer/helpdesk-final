@@ -4,26 +4,34 @@ import java.sql.Timestamp;
 
 public class TicketAsignadoDTO {
     private int idTicket;
+    private int idTrabajador;
     private int idReporteIncidente;
     private int idCliente;
+    private String nombresCliente;
+    private String apellidosCliente;
+    private String nombresTrabajador;
+    private String apellidosTrabajador;
     private String nombreIncidente;
     private String descripcion;
-    private int nivel;
     private String estado;
     private Timestamp fecha;
 
-    public TicketAsignadoDTO() {
-    }
-
-    public TicketAsignadoDTO(int idTicket, int idReporteIncidente, int idCliente, String nombreIncidente, String descripcion, int nivel, String estado, Timestamp fecha) {
+    public TicketAsignadoDTO(int idTicket, int idTrabajador, int idReporteIncidente, int idCliente, String nombresCliente, String apellidosCliente, String nombresTrabajador, String apellidosTrabajador, String nombreIncidente, String descripcion, String estado, Timestamp fecha) {
         this.idTicket = idTicket;
+        this.idTrabajador = idTrabajador;
         this.idReporteIncidente = idReporteIncidente;
         this.idCliente = idCliente;
+        this.nombresCliente = nombresCliente;
+        this.apellidosCliente = apellidosCliente;
+        this.nombresTrabajador = nombresTrabajador;
+        this.apellidosTrabajador = apellidosTrabajador;
         this.nombreIncidente = nombreIncidente;
         this.descripcion = descripcion;
-        this.nivel = nivel;
         this.estado = estado;
         this.fecha = fecha;
+    }
+
+    public TicketAsignadoDTO() {
     }
 
     public int getIdTicket() {
@@ -32,6 +40,14 @@ public class TicketAsignadoDTO {
 
     public void setIdTicket(int idTicket) {
         this.idTicket = idTicket;
+    }
+
+    public int getIdTrabajador() {
+        return idTrabajador;
+    }
+
+    public void setIdTrabajador(int idTrabajador) {
+        this.idTrabajador = idTrabajador;
     }
 
     public int getIdReporteIncidente() {
@@ -50,6 +66,38 @@ public class TicketAsignadoDTO {
         this.idCliente = idCliente;
     }
 
+    public String getNombresCliente() {
+        return nombresCliente;
+    }
+
+    public void setNombresCliente(String nombresCliente) {
+        this.nombresCliente = nombresCliente;
+    }
+
+    public String getApellidosCliente() {
+        return apellidosCliente;
+    }
+
+    public void setApellidosCliente(String apellidosCliente) {
+        this.apellidosCliente = apellidosCliente;
+    }
+
+    public String getNombresTrabajador() {
+        return nombresTrabajador;
+    }
+
+    public void setNombresTrabajador(String nombresTrabajador) {
+        this.nombresTrabajador = nombresTrabajador;
+    }
+
+    public String getApellidosTrabajador() {
+        return apellidosTrabajador;
+    }
+
+    public void setApellidosTrabajador(String apellidosTrabajador) {
+        this.apellidosTrabajador = apellidosTrabajador;
+    }
+
     public String getNombreIncidente() {
         return nombreIncidente;
     }
@@ -64,14 +112,6 @@ public class TicketAsignadoDTO {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public int getNivel() {
-        return nivel;
-    }
-
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
     }
 
     public String getEstado() {

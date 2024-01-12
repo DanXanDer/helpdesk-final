@@ -13,6 +13,7 @@ public class LoggedUserManagamentService {
     private int idUsuario;
     private String nombreUsuario;
     private String nombres;
+    private String apellidos;
     private String tipo;
     private List<Privilegio> privilegios;
 
@@ -38,6 +39,14 @@ public class LoggedUserManagamentService {
 
     public void setNombres(String nombres) {
         this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public String getTipo() {

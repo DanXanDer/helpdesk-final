@@ -26,7 +26,7 @@ public class ActualizarInformacionController {
         this.loggedUserManagamentService = loggedUserManagamentService;
     }
 
-    @PostMapping("/actualizar-datos-cliente")
+    @PostMapping("/informacion/actualizar-datos")
     public ResponseEntity<Map<String, Object>> actualizarDatosCliente(@RequestBody ActualizarDatosClienteDTO actualizarDatosClienteDTO) {
         int idUsuario = loggedUserManagamentService.getIdUsuario();
         int idCliente = actualizarInformacionService.obtenerClientePorIdUsuario(idUsuario).getIdCliente();
@@ -38,7 +38,7 @@ public class ActualizarInformacionController {
                 .body(respuesta);
     }
 
-    @GetMapping("/datos-cliente")
+    @GetMapping("/informacion/datos")
     public ResponseEntity<Map<String, Object>> obtenerDatosCliente() {
         int idUsuario = loggedUserManagamentService.getIdUsuario();
         Map<String, Object> respuesta = actualizarInformacionService.obtenerDatosCliente(idUsuario);
@@ -47,7 +47,7 @@ public class ActualizarInformacionController {
                 .body(respuesta);
     }
 
-    @PostMapping("/cambiar-clave-cliente")
+    @PostMapping("/informacion/actualizar-clave")
     public ResponseEntity<Map<String, Object>> cambiarClaveCliente(@Valid @RequestBody CambiarClaveClienteDTO cambiarClaveClienteDTO) {
         int idUsuario = loggedUserManagamentService.getIdUsuario();
         actualizarInformacionService.cambiarClaveCliente(cambiarClaveClienteDTO, idUsuario);

@@ -8,7 +8,10 @@ import org.springframework.data.repository.CrudRepository;
 public interface ActividadTicketRepository extends CrudRepository<ActividadTicket, Integer> {
 
     @Modifying
-    @Query("INSERT INTO actividad_ticket (id_ticket, mensaje, estado) " +
-            "VALUES (:idTicket, :mensaje, :estado)")
-    void guardarActividadTicket(int idTicket, String mensaje, String estado);
+    @Query("INSERT INTO actividad_ticket (id_ticket, emisor, mensaje, estado) " +
+            "VALUES (:idTicket, :emisor, :mensaje, :estado)")
+    void guardarActividadTicket(int idTicket, String emisor, String mensaje, String estado);
+
+    @Query("SELECT LAST_INSERT_ID()")
+    int obtenerUltimoIdInsertado();
 }

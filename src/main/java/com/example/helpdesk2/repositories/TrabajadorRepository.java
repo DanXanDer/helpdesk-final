@@ -9,10 +9,8 @@ import org.springframework.data.repository.CrudRepository;
 public interface TrabajadorRepository extends CrudRepository<Trabajador, Integer> {
 
     @Modifying
-    @Query("INSERT INTO trabajador (id_usuario, nivel) VALUES " +
-            "(:#{#registrarTrabajadorDTO.idUsuario}, " +
-            ":#{#registrarTrabajadorDTO.nivel})")
-    void registrarTrabajador(RegistrarTrabajadorDTO registrarTrabajadorDTO);
+    @Query("INSERT INTO trabajador (id_usuario) VALUES (:idUsuario)")
+    void registrarTrabajador(int idUsuario);
 
     @Query("SELECT * FROM trabajador WHERE id_usuario = :idUsuario")
     Trabajador buscarTrabajadorPorIdUsuario(int idUsuario);

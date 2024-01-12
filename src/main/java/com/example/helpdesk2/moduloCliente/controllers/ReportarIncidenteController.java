@@ -27,9 +27,8 @@ public class ReportarIncidenteController {
         this.loggedUserManagamentService = loggedUserManagamentService;
     }
 
-
     @Transactional
-    @PostMapping("/reportar-incidente")
+    @PostMapping("/reportes/reportar-incidente")
     public ResponseEntity<Map<String, Object>> reportarIncidente(
             @RequestParam String nombreIncidente,
             @RequestParam String descripcion,
@@ -37,7 +36,7 @@ public class ReportarIncidenteController {
         int idCliente = reportarIncidenteService.obtenerIdCliente(loggedUserManagamentService.getIdUsuario());
         int idIncidente = reportarIncidenteService.registrarIncidente(idCliente, nombreIncidente, descripcion);
         if (imagenes != null) {
-            Path reporteFolder = fileStorageService.crearDirectorio(idIncidente);
+            Path reporteFolder = fileStorageService.crearDirectorio(idIncidente, "reporte", null);
             for (MultipartFile imagen : imagenes) {
                 String nombreImagen = fileStorageService.guardar(imagen, reporteFolder);
                 reportarIncidenteService.registrarImagen(idIncidente, nombreImagen);

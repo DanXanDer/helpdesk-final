@@ -8,9 +8,6 @@ import java.util.List;
 
 public interface PrivilegioRepository extends CrudRepository<Privilegio, Integer> {
 
-    @Query("SELECT * from privilegio")
-    List<Privilegio> buscarTodosPrivilegios();
-
     @Query("SELECT p.* FROM privilegio p " +
             "JOIN usuario_privilegio up ON p.id_privilegio = up.id_privilegio " +
             "JOIN usuario u ON up.id_usuario = u.id_usuario " +

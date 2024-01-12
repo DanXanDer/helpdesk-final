@@ -22,4 +22,10 @@ public interface ImagenRepository extends CrudRepository<Imagen, Integer> {
             "JOIN reporte_incidente rin ON ri.id_reporte_incidente = rin.id_reporte_incidente " +
             "WHERE rin.id_reporte_incidente = :idReporteIncidente" )
     List<Imagen> buscarImagenesReporte(int idReporteIncidente);
+
+    @Query("SELECT i.* FROM imagen i " +
+            "JOIN mensaje_imagen mi ON i.id_imagen = mi.id_imagen " +
+            "JOIN mensaje m ON mi.id_mensaje = m.id_mensaje " +
+            "WHERE m.id_mensaje = :idMensaje" )
+    List<Imagen> buscarImagenesMensaje(int idMensaje);
 }

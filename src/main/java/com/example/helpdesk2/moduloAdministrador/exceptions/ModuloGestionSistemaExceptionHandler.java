@@ -1,4 +1,4 @@
-package com.example.helpdesk2.moduloGestionSistema.exceptions;
+package com.example.helpdesk2.moduloAdministrador.exceptions;
 
 import com.example.helpdesk2.exceptions.ErrorDetalles;
 import org.springframework.http.HttpStatus;

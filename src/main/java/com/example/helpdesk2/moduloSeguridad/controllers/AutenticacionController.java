@@ -50,6 +50,7 @@ public class AutenticacionController {
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("idUsuario", loggedUserManagamentService.getIdUsuario());
         respuesta.put("nombres", loggedUserManagamentService.getNombres());
+        respuesta.put("apellidos", loggedUserManagamentService.getApellidos());
         respuesta.put("privilegios", loggedUserManagamentService.getPrivilegios());
         respuesta.put("tipo", loggedUserManagamentService.getTipo());
         return ResponseEntity
@@ -96,6 +97,7 @@ public class AutenticacionController {
         respuesta.put("idUsuario", loggedUserManagamentService.getIdUsuario());
         respuesta.put("nombres", loggedUserManagamentService.getNombres());
         respuesta.put("tipo", loggedUserManagamentService.getTipo());
+        respuesta.put("apellidos", loggedUserManagamentService.getApellidos());
         respuesta.put("privilegios", loggedUserManagamentService.getPrivilegios());
         return ResponseEntity
                 .status(HttpStatus.OK)

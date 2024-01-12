@@ -1,6 +1,5 @@
 package com.example.helpdesk2.moduloCliente.services;
 
-import com.example.helpdesk2.DTO.ActividadTicketDTO;
 import com.example.helpdesk2.DTO.ConformidadTicketDTO;
 import com.example.helpdesk2.DTO.RegistrarMensajeTicketDTO;
 import com.example.helpdesk2.DTO.ReporteIncidenteDetalleDTO;
@@ -21,8 +20,9 @@ public class SeguimientoReporteIncidenteService {
     private final MensajeTicketRepository mensajeTicketRepository;
     private final TrabajadorRepository trabajadorRepository;
     private final ActividadTicketRepository actividadTicketRepository;
+    private final ImagenRepository imagenRepository;
 
-    public SeguimientoReporteIncidenteService(ReporteIncidenteRepository reporteIncidenteRepository, TicketRepository ticketRepository, ClienteRepository clienteRepository, UsuarioRepository usuarioRepository, MensajeRepository mensajeRepository, MensajeTicketRepository mensajeTicketRepository, TrabajadorRepository trabajadorRepository, ActividadTicketRepository actividadTicketRepository) {
+    public SeguimientoReporteIncidenteService(ReporteIncidenteRepository reporteIncidenteRepository, TicketRepository ticketRepository, ClienteRepository clienteRepository, UsuarioRepository usuarioRepository, MensajeRepository mensajeRepository, MensajeTicketRepository mensajeTicketRepository, TrabajadorRepository trabajadorRepository, ActividadTicketRepository actividadTicketRepository, ImagenRepository imagenRepository) {
         this.reporteIncidenteRepository = reporteIncidenteRepository;
         this.ticketRepository = ticketRepository;
         this.clienteRepository = clienteRepository;
@@ -31,14 +31,13 @@ public class SeguimientoReporteIncidenteService {
         this.mensajeTicketRepository = mensajeTicketRepository;
         this.trabajadorRepository = trabajadorRepository;
         this.actividadTicketRepository = actividadTicketRepository;
+        this.imagenRepository = imagenRepository;
     }
 
     public List<ReporteIncidenteDetalleDTO> obtenerReportesIncidentesCliente(int idUsuario) {
         int idCliente = clienteRepository.buscarClientePorIdUsuario(idUsuario).getIdCliente();
         List<ReporteIncidente> reportesIncidentes = reporteIncidenteRepository.buscarReportesIncidentesCliente(idCliente);
-
         List<ReporteIncidenteDetalleDTO> reportesIncidentesDetalles = new ArrayList<>();
-
         for (ReporteIncidente reporteIncidente : reportesIncidentes) {
             Optional<Ticket> ticketOptional = ticketRepository.buscarTicketPorIDReporteIncidente(reporteIncidente.getIdReporteIncidente());
             ReporteIncidenteDetalleDTO reporteIncidenteDetalleDTO = new ReporteIncidenteDetalleDTO();
@@ -59,19 +58,22 @@ public class SeguimientoReporteIncidenteService {
 
     public Map<String, Object> obtenerReporteIncidentePorID(int idReporteIncidente) {
         ReporteIncidente reporteIncidente = reporteIncidenteRepository.buscarReporteIncidente(idReporteIncidente);
+        List<Imagen> rutasImagenes = imagenRepository.buscarImagenesReporte(idReporteIncidente);
         Ticket ticket = ticketRepository.buscarTicketPorIDReporteIncidente(idReporteIncidente).get();
         int idUsuario = trabajadorRepository.buscarTrabajadorPorIdTrabajador(ticket.getIdTrabajador()).getIdUsuario();
-        String nombres = usuarioRepository.buscarUsuarioPorId(idUsuario).getNombres();
+        String datosTrabajador = usuarioRepository.buscarUsuarioPorId(idUsuario).getNombres() + " " + usuarioRepository.buscarUsuarioPorId(idUsuario).getApellidos();
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("reporteIncidente", reporteIncidente);
-        respuesta.put("ticket", ticket);
-        respuesta.put("nombreTrabajador", nombres);
+        respuesta.put("rutasImagenes", rutasImagenes);
+        respuesta.put("idTicket", ticket.getIdTicket());
+        respuesta.put("datosTrabajador", datosTrabajador);
         return respuesta;
     }
 
     public List<Mensaje> obtenerMensajesTicket(int idTicket) {
         return mensajeRepository.buscarMensajesTicket(idTicket);
     }
+
     @Transactional
     public void registrarMensajeTicket(RegistrarMensajeTicketDTO registrarMensajeTicketDTO) {
         mensajeRepository.guardarMensaje(registrarMensajeTicketDTO);
@@ -79,11 +81,11 @@ public class SeguimientoReporteIncidenteService {
         mensajeTicketRepository.guardarMensajeTicket(registrarMensajeTicketDTO.getIdTicket(), idMensaje);
     }
 
-    @Transactional
+  /*  @Transactional
     public void confirmarAtencion(ConformidadTicketDTO conformidadTicketDTO){
         ticketRepository.actualizarEstadoTicket(conformidadTicketDTO.getEstadoTicket(), conformidadTicketDTO.getIdTicket());
         reporteIncidenteRepository.actualizarEstadoReporteIncidente(conformidadTicketDTO.getIdReporteIncidente(), conformidadTicketDTO.getEstadoReporteIncidente());
         actividadTicketRepository.guardarActividadTicket(conformidadTicketDTO.getIdTicket(), conformidadTicketDTO.getMensaje(), conformidadTicketDTO.getEstadoTicket());
-    }
+    }*/
 
 }
