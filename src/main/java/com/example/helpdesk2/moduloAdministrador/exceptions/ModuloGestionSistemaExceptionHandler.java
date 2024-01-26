@@ -13,7 +13,7 @@ import java.util.Map;
 public class ModuloGestionSistemaExceptionHandler {
 
     @ExceptionHandler(UsuariosNoEncontradosException.class)
-    public ResponseEntity<Map<String, Object>> handleUsuariosNoEncontrados(){
+    public ResponseEntity<Map<String, Object>> handleUsuariosNoEncontradosException(){
         ErrorDetalles errorDetalles = new ErrorDetalles();
         errorDetalles.setMensaje("No se encontraron usuarios");
         Map<String, Object> respuesta = new HashMap<>();
@@ -25,9 +25,33 @@ public class ModuloGestionSistemaExceptionHandler {
     }
 
     @ExceptionHandler(NombreUsuarioExisteException.class)
-    public ResponseEntity<Map<String, Object>> handleNombreUsuarioNoExiste(){
+    public ResponseEntity<Map<String, Object>> handleNombreUsuarioExisteException(){
         ErrorDetalles errorDetalles = new ErrorDetalles();
-        errorDetalles.setMensaje("El nombre de usuario ya existe");
+        errorDetalles.setMensaje("El nombre de usuario ya existe. Intente con otro");
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", false);
+        respuesta.put("error", errorDetalles);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(respuesta);
+    }
+
+    @ExceptionHandler(CorreoUsuarioExisteException.class)
+    public ResponseEntity<Map<String, Object>> handleCorreUsuarioExisteException(){
+        ErrorDetalles errorDetalles = new ErrorDetalles();
+        errorDetalles.setMensaje("El correo ya existe");
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("ok", false);
+        respuesta.put("error", errorDetalles);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(respuesta);
+    }
+
+    @ExceptionHandler(NombreEmpresaExisteException.class)
+    public ResponseEntity<Map<String, Object>> handleNombreEmpresaExisteException(){
+        ErrorDetalles errorDetalles = new ErrorDetalles();
+        errorDetalles.setMensaje("El nombre de la empresa ya existe");
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("ok", false);
         respuesta.put("error", errorDetalles);

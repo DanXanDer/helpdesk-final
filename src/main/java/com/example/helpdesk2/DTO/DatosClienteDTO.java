@@ -1,9 +1,12 @@
 package com.example.helpdesk2.DTO;
 
 public class DatosClienteDTO {
+    private int idUsuario;
+    private String nombreUsuario;
     private String nombres;
     private String apellidos;
     private String correo;
+    private int estado;
     private String nombreArea;
     private String nombreSede;
     private String nombreEmpresa;
@@ -13,15 +16,42 @@ public class DatosClienteDTO {
     public DatosClienteDTO() {
     }
 
-    public DatosClienteDTO(String nombres, String apellidos, String correo, String nombreArea, String nombreSede, String nombreEmpresa, String anydesk, String teamviewer) {
+    public DatosClienteDTO(int idUsuario, String nombreUsuario, String nombres, String apellidos, String correo, int estado, String nombreArea, String nombreSede, String nombreEmpresa, String anydesk, String teamviewer) {
+        this.idUsuario = idUsuario;
+        this.nombreUsuario = nombreUsuario;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.correo = correo;
+        this.estado = estado;
         this.nombreArea = nombreArea;
         this.nombreSede = nombreSede;
         this.nombreEmpresa = nombreEmpresa;
         this.anydesk = anydesk;
         this.teamviewer = teamviewer;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getNombres() {

@@ -1,6 +1,7 @@
 package com.example.helpdesk2.moduloAdministrador.controllers;
 
 import com.example.helpdesk2.DTO.CambiarEstadoUsuarioDTO;
+import com.example.helpdesk2.DTO.DatosClienteDTO;
 import com.example.helpdesk2.DTO.RegistrarClienteDTO;
 import com.example.helpdesk2.DTO.RegistrarTrabajadorDTO;
 import com.example.helpdesk2.models.Usuario;
@@ -25,17 +26,28 @@ public class GestionarUsuariosController {
         this.gestionarUsuariosService = gestionarUsuariosService;
     }
 
-    @GetMapping("/usuarios")
-    public ResponseEntity<Map<String, Object>> obtenerUsuarios(
-            @RequestParam(required = false) String filtro,
-            @RequestParam(required = false) String valor){
-        List<Usuario> usuarios = gestionarUsuariosService.obtenerUsuarios(filtro, valor);
+    @GetMapping("/trabajadores")
+    public ResponseEntity<Map<String, Object>> obtenerUsuarios(){
+        List<Usuario> usuarios = gestionarUsuariosService.obtenerTrabajadores();
         Map<String, Object> respuesta = new HashMap<>();
-        respuesta.put("usuarios", usuarios);
+        respuesta.put("trabajadores", usuarios);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(respuesta);
     }
+
+    @GetMapping("/clientes")
+    public ResponseEntity<Map<String, Object>> obtenerClientes(){
+        List<DatosClienteDTO> clientes = gestionarUsuariosService.obtenerTodosLosClientes();
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("clientes", clientes);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respuesta);
+    }
+
+
+
 
     @PostMapping("/usuarios/cambiar-estado")
     public ResponseEntity<Map<String, Object>> cambiarEstadoUsuario(@RequestBody CambiarEstadoUsuarioDTO cambiarEstadoUsuarioDTO){

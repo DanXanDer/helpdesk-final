@@ -48,7 +48,7 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
 
     @Query("SELECT u.id_usuario, u.nombre_usuario, u.nombres, u.apellidos, u.correo, u.tipo, u.estado " +
             "FROM usuario u WHERE u.tipo != 'Administrador'")
-    Optional<List<Usuario>> buscarUsuariosNoAdministradores();
+    List<Usuario> buscarUsuariosNoAdministradores();
 
     @Query("SELECT u.id_usuario, u.nombre_usuario, u.nombres, u.apellidos FROM usuario u WHERE " +
             "(:filtro = 'nombre_usuario' AND u.nombre_usuario LIKE CONCAT(:valor, '%')) OR " +
@@ -61,8 +61,11 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
     @Query("UPDATE usuario SET estado = :#{#cambiarEstadoUsuarioDTO.estado} WHERE id_usuario = :#{#cambiarEstadoUsuarioDTO.idUsuario}")
     void cambiarEstadoUsuario(CambiarEstadoUsuarioDTO cambiarEstadoUsuarioDTO);
 
-    @Query("SELECT u.nombre_usuario FROM usuario u WHERE nombre_usuario = :#{#registrarUsuarioDTO.nombreUsuario}")
-    Optional<String> buscarNombreUsuarioExistente(RegistrarUsuarioDTO registrarUsuarioDTO);
+    @Query("SELECT u.nombre_usuario FROM usuario u WHERE nombre_usuario = :nombreUsuario")
+    Optional<String> buscarNombreUsuarioExistente(String nombreUsuario);
+
+    @Query("SELECT u.correo FROM usuario u WHERE correo = :correo")
+    Optional<String> buscarCorreoUsuarioExistente(String correo);
 
     @Modifying
     @Query("INSERT INTO usuario (nombre_usuario, clave, nombres, apellidos, correo, tipo) " +

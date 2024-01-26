@@ -1,10 +1,8 @@
 package com.example.helpdesk2.moduloAdministrador.services;
 
-import com.example.helpdesk2.DTO.CambiarEstadoUsuarioDTO;
-import com.example.helpdesk2.DTO.RegistrarClienteDTO;
-import com.example.helpdesk2.DTO.RegistrarTrabajadorDTO;
-import com.example.helpdesk2.DTO.RegistrarUsuarioDTO;
+import com.example.helpdesk2.DTO.*;
 import com.example.helpdesk2.models.*;
+import com.example.helpdesk2.moduloAdministrador.exceptions.CorreoUsuarioExisteException;
 import com.example.helpdesk2.moduloAdministrador.exceptions.NombreUsuarioExisteException;
 import com.example.helpdesk2.moduloAdministrador.exceptions.UsuariosNoEncontradosException;
 import com.example.helpdesk2.repositories.*;
@@ -35,16 +33,13 @@ public class GestionarUsuariosService {
     }
 
 
-    public List<Usuario> obtenerUsuarios(String filtro, String valor) {
-        List<Usuario> usuarios;
-        if (filtro != null && valor != null) {
-            usuarios = usuarioRepository.buscarUsuariosPorFiltro(filtro, valor)
-                    .orElseThrow(UsuariosNoEncontradosException::new);
-        } else {
-            usuarios = usuarioRepository.buscarUsuariosNoAdministradores()
-                    .orElseThrow(UsuariosNoEncontradosException::new);
-        }
-        return usuarios;
+
+    public List<Usuario> obtenerTrabajadores() {
+        return usuarioRepository.buscarUsuariosNoAdministradores();
+    }
+
+    public List<DatosClienteDTO> obtenerTodosLosClientes(){
+        return clienteRepository.buscarTodosLosClientes();
     }
 
     public void cambiarEstadoUsuario(CambiarEstadoUsuarioDTO cambiarEstadoUsuarioDTO) {
@@ -52,8 +47,11 @@ public class GestionarUsuariosService {
     }
 
     public int crearUsuario(RegistrarUsuarioDTO registrarUsuarioDTO) {
-        if (usuarioRepository.buscarNombreUsuarioExistente(registrarUsuarioDTO).isPresent()) {
+        if (usuarioRepository.buscarNombreUsuarioExistente(registrarUsuarioDTO.getNombreUsuario()).isPresent()) {
             throw new NombreUsuarioExisteException();
+        }
+        if(usuarioRepository.buscarCorreoUsuarioExistente(registrarUsuarioDTO.getCorreo()).isPresent()){
+            throw new CorreoUsuarioExisteException();
         }
         usuarioRepository.registrarUsuario(registrarUsuarioDTO);
         int idUsuario = usuarioRepository.obtenerUltimoIdUsuario();

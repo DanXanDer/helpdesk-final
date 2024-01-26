@@ -6,6 +6,8 @@ import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
 
     @Modifying
@@ -30,7 +32,7 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
     @Query("UPDATE usuario SET clave = :#{#cambiarClaveClienteDTO.clave} WHERE id_usuario = :idUsuario")
     void actualizarClave(CambiarClaveClienteDTO cambiarClaveClienteDTO, int idUsuario);
 
-    @Query("SELECT u.nombres, u.apellidos, u.correo, a.nombre_area, s.nombre_sede, e.nombre_empresa, c.anydesk, c.teamviewer " +
+    @Query("SELECT u.nombre_usuario, u.nombres, u.apellidos, u.correo, a.nombre_area, s.nombre_sede, e.nombre_empresa, c.anydesk, c.teamviewer " +
             "FROM cliente c " +
             "INNER JOIN usuario u " +
             "ON c.id_usuario = u.id_usuario " +
@@ -42,5 +44,17 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
             "ON s.id_empresa = e.id_empresa " +
             "WHERE c.id_cliente = :idCliente")
     DatosClienteDTO buscarDatosCliente(int idCliente);
+
+    @Query("SELECT u.id_usuario, u.nombre_usuario, u.nombres, u.apellidos, u.correo, u.estado, a.nombre_area, s.nombre_sede, e.nombre_empresa, c.anydesk, c.teamviewer " +
+            "FROM cliente c " +
+            "INNER JOIN usuario u " +
+            "ON c.id_usuario = u.id_usuario " +
+            "INNER JOIN area a " +
+            "ON c.id_area = a.id_area " +
+            "INNER JOIN sede s " +
+            "ON a.id_sede = s.id_sede " +
+            "INNER JOIN empresa e " +
+            "ON s.id_empresa = e.id_empresa ")
+    List<DatosClienteDTO> buscarTodosLosClientes();
 
 }

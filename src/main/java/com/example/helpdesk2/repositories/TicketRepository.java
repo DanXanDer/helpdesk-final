@@ -23,10 +23,12 @@ public interface TicketRepository extends CrudRepository<Ticket, Integer> {
             "INNER JOIN reporte_incidente ri ON t.id_reporte_incidente = ri.id_reporte_incidente " +
             "INNER JOIN cliente c ON ri.id_cliente = c.id_cliente " +
             "INNER JOIN usuario u_cliente ON c.id_usuario = u_cliente.id_usuario " +
-            "LEFT JOIN usuario u_trabajador ON t.id_trabajador = u_trabajador.id_usuario")
+            "LEFT JOIN trabajador tbd ON t.id_trabajador = tbd.id_trabajador " +
+            "LEFT JOIN usuario u_trabajador ON tbd.id_usuario = u_trabajador.id_usuario")
     List<TicketAsignadoDTO> buscarTickets();
 
-    @Query("SELECT t.id_ticket, t.id_reporte_incidente, t.estado, c.id_cliente, u.nombres, u.apellidos, ri.nombre_incidente, ri.descripcion, ri.fecha " +
+
+    @Query("SELECT t.id_ticket, t.id_reporte_incidente, t.estado, c.id_cliente, u.nombres as nombres_cliente, u.apellidos as apellidos_cliente, ri.nombre_incidente, ri.descripcion, ri.fecha " +
             "FROM ticket t " +
             "INNER JOIN reporte_incidente ri ON t.id_reporte_incidente = ri.id_reporte_incidente " +
             "INNER JOIN cliente c ON ri.id_cliente = c.id_cliente " +

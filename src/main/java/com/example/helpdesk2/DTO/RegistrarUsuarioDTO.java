@@ -10,6 +10,7 @@ public abstract class RegistrarUsuarioDTO {
     private String nombreUsuario;
     @Size(min = 8, max = 20, message = "La clave debe tener entre 8 y 20 caracteres")
     private String clave;
+
     @NotBlank(message = "El campo de nombres no puede estar vacío")
     private String nombres;
     @NotBlank(message = "El campo apellidos no puede estar vacío")
