@@ -1,17 +1,11 @@
 package com.example.helpdesk2.repositories;
 
-import com.example.helpdesk2.DTO.CambiarClaveClienteDTO;
-import com.example.helpdesk2.DTO.EscogerTicketDTO;
-import com.example.helpdesk2.DTO.ReestablecerClaveDTO;
-import com.example.helpdesk2.DTO.ValidarDatosUsuarioDTO;
 import com.example.helpdesk2.models.ReporteIncidente;
-import com.example.helpdesk2.models.Usuario;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ReporteIncidenteRepository extends CrudRepository<ReporteIncidente, Integer> {
     @Modifying
@@ -21,8 +15,18 @@ public interface ReporteIncidenteRepository extends CrudRepository<ReporteIncide
     @Query("SELECT LAST_INSERT_ID()")
     int obtenerUltimoIDReporteIncidente();
 
-    @Query("SELECT * FROM reporte_incidente WHERE estado = 'En espera'")
-    Optional<List<ReporteIncidente>> buscarReportesIncidentes();
+    @Query("SELECT ri.id_reporte_incidente, ri.id_cliente, ri.nombre_incidente, " +
+            "ri.descripcion, ri.estado, ri.fecha, " +
+            "u.nombres, u.apellidos, " +
+            "a.nombre_area, s.nombre_sede, e.nombre_empresa " +
+            "FROM reporte_incidente ri " +
+            "INNER JOIN cliente c ON ri.id_cliente = c.id_cliente " +
+            "INNER JOIN usuario u ON c.id_usuario = u.id_usuario " +
+            "INNER JOIN area a ON c.id_area = a.id_area " +
+            "INNER JOIN sede s ON a.id_sede = s.id_sede " +
+            "INNER JOIN empresa e ON s.id_empresa = e.id_empresa " +
+            "WHERE ri.estado = 'En espera'")
+    List<ReporteIncidente> buscarReportesIncidentes();
 
     @Query("SELECT * FROM reporte_incidente WHERE id_reporte_incidente = :idReporteIncidente")
     ReporteIncidente buscarReporteIncidente(int idReporteIncidente);

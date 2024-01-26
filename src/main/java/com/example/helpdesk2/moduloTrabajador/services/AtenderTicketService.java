@@ -43,7 +43,7 @@ public class AtenderTicketService {
     }
 
     public List<TicketAsignadoDTO> obtenerTicketsTrabajador(int idTrabajador) {
-        return ticketRepository.buscarTicketsTrabajador(idTrabajador).orElseThrow(TicketsTrabajadorNoEncontradosException::new);
+        return ticketRepository.buscarTicketsTrabajador(idTrabajador);
     }
 
     public int obtenerIdTrabajador(int idUsuario) {

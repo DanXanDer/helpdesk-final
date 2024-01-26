@@ -10,13 +10,17 @@ public class TicketAsignadoDTO {
     private String nombresCliente;
     private String apellidosCliente;
     private String nombresTrabajador;
+    private String nombreArea;
+    private String nombreSede;
+    private String nombreEmpresa;
     private String apellidosTrabajador;
     private String nombreIncidente;
     private String descripcion;
     private String estado;
-    private Timestamp fecha;
+    private Timestamp ticketFecha;
+    private Timestamp reporteFecha;
 
-    public TicketAsignadoDTO(int idTicket, int idTrabajador, int idReporteIncidente, int idCliente, String nombresCliente, String apellidosCliente, String nombresTrabajador, String apellidosTrabajador, String nombreIncidente, String descripcion, String estado, Timestamp fecha) {
+    public TicketAsignadoDTO(int idTicket, int idTrabajador, int idReporteIncidente, int idCliente, String nombresCliente, String apellidosCliente, String nombresTrabajador, String nombreArea, String nombreSede, String nombreEmpresa, String apellidosTrabajador, String nombreIncidente, String descripcion, String estado, Timestamp ticketFecha, Timestamp reporteFecha) {
         this.idTicket = idTicket;
         this.idTrabajador = idTrabajador;
         this.idReporteIncidente = idReporteIncidente;
@@ -24,11 +28,15 @@ public class TicketAsignadoDTO {
         this.nombresCliente = nombresCliente;
         this.apellidosCliente = apellidosCliente;
         this.nombresTrabajador = nombresTrabajador;
+        this.nombreArea = nombreArea;
+        this.nombreSede = nombreSede;
+        this.nombreEmpresa = nombreEmpresa;
         this.apellidosTrabajador = apellidosTrabajador;
         this.nombreIncidente = nombreIncidente;
         this.descripcion = descripcion;
         this.estado = estado;
-        this.fecha = fecha;
+        this.ticketFecha = ticketFecha;
+        this.reporteFecha = reporteFecha;
     }
 
     public TicketAsignadoDTO() {
@@ -90,6 +98,30 @@ public class TicketAsignadoDTO {
         this.nombresTrabajador = nombresTrabajador;
     }
 
+    public String getNombreArea() {
+        return nombreArea;
+    }
+
+    public void setNombreArea(String nombreArea) {
+        this.nombreArea = nombreArea;
+    }
+
+    public String getNombreSede() {
+        return nombreSede;
+    }
+
+    public void setNombreSede(String nombreSede) {
+        this.nombreSede = nombreSede;
+    }
+
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
+    }
+
     public String getApellidosTrabajador() {
         return apellidosTrabajador;
     }
@@ -122,11 +154,19 @@ public class TicketAsignadoDTO {
         this.estado = estado;
     }
 
-    public Timestamp getFecha() {
-        return fecha;
+    public Timestamp getTicketFecha() {
+        return ticketFecha;
     }
 
-    public void setFecha(Timestamp fecha) {
-        this.fecha = fecha;
+    public void setTicketFecha(Timestamp ticketFecha) {
+        this.ticketFecha = ticketFecha;
+    }
+
+    public Timestamp getReporteFecha() {
+        return reporteFecha;
+    }
+
+    public void setReporteFecha(Timestamp reporteFecha) {
+        this.reporteFecha = reporteFecha;
     }
 }

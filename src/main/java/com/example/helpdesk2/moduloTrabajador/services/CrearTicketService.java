@@ -27,7 +27,7 @@ public class CrearTicketService {
     }
 
     public List<ReporteIncidente> obtenerReportesIncidentes() {
-        return reporteIncidenteRepository.buscarReportesIncidentes().orElseThrow(ReporteNoEncontradoException::new);
+        return reporteIncidenteRepository.buscarReportesIncidentes();
     }
 
     public Map<String, Object> obtenerReporteIncidente(int idReporteIncidente) {
